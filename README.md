@@ -2,13 +2,18 @@
 Consolidation of tools in the MutPred Package
 Mutation Prediction Integration
 
+
 *Motivation*
 MutPred suite - machine learning tools to predict the pathogenicity of protein-coding variants and infer molecular mechanisms of disease
 Currently, support inputs and outputs aimed at the protein biochemistry world
 The genomics community works in the chromosomal space in VCFs
+
+Access MutPred2 http://mutpred.mutdb.org/
+
 NEED TO BRIDGE THE GAP!!
 Build integrated workflow to support this and address issues with scalability - need to be able to run these tools on upto 100,000 variants
 Think about ways to make this more generic
+
 
 ![alt text](https://github.com/NCBI-Hackathons/Mutpred_Consolidation/blob/master/mutpred_workflow.png "Workflow")
 
@@ -30,3 +35,13 @@ Stretch Goals
 -------------
 * Dockerize
 * Integration of MutPred tools
+
+
+How to use
+
+Installation options:
+
+Testing
+
+Additional Functionality
+
