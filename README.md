@@ -14,17 +14,19 @@ Think about ways to make this more generic
 
 Annotation
 ----------
-ANNOVAR
+* ANNOVAR?
 
 Workflow
 --------
-Snake-make
-CWL
-
-
+* Snake-make
+* CWL
 
 Parallezation
 -------------
 Missense are the most abundant might consider splitting these up
 2 minutes per missense variant currently
 
+Stretch Goals
+-------------
+* Dockerize
+* Integration of MutPred tools
