@@ -10,7 +10,7 @@ NEED TO BRIDGE THE GAP!!
 Build integrated workflow to support this and address issues with scalability - need to be able to run these tools on upto 100,000 variants
 Think about ways to make this more generic
 
-![alt text](https://github.com/NCBI-Hackathons/Mutpred_Consolidation/blob/master/MutPred%20Integration%20Workflow.png "Workflow")
+![alt text](https://github.com/NCBI-Hackathons/Mutpred_Consolidation/blob/master/mutpred_workflow.png"Workflow")
 
 Annotation
 ----------
