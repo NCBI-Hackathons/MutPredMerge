@@ -2,7 +2,7 @@
 Consolidation of tools in the MutPred Package
 Mutation Prediction Integration
 
-Motivation
+*Motivation*
 MutPred suite - machine learning tools to predict the pathogenicity of protein-coding variants and infer molecular mechanisms of disease
 Currently, support inputs and outputs aimed at the protein biochemistry world
 The genomics community works in the chromosomal space in VCFs
@@ -13,15 +13,18 @@ Think about ways to make this more generic
 Workflow (editable) 
 
 Annotation
+----------
 ANNOVAR
 
-Workflow:
+Workflow
+--------
 Snake-make
 CWL
 
 
 
-Parallezation:
+Parallezation
+-------------
 Missense are the most abundant might consider splitting these up
 2 minutes per missense variant currently
 
