@@ -49,14 +49,14 @@ Installation options:
 
 Testing
 --------------
-1. Initial pipeline: 
-VCF file -> annovar -> translations (protein sequences) + mutations(SNPs, Indels, Splice Variants)
-protein sequences -> MutPred Software Suite -> outputs
-Descripe in Snakemake file
-Run the pipelline
-Verify output
+1. Initial pipeline:
+  VCF file -> annovar -> translations (protein sequences) + mutations(SNPs, Indels, Splice Variants)
+  protein sequences -> MutPred Software Suite -> outputs
+  Descripe in Snakemake file
+  Run the pipelline
+  Verify output
 2. Parallelize operation
-groups of protein sequences -> MutPred Software Suite -> outputs
+  groups of protein sequences -> MutPred Software Suite -> outputs
 
 Additional Functionality
 
