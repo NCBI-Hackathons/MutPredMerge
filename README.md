@@ -2,8 +2,10 @@
 Consolidation of tools in the MutPred Package
 Mutation Prediction Integration
 
-*Update* 
+*Updates* 
 [Slides](https://docs.google.com/presentation/d/1Fp9yuV2slaYAni1wY5unc3VICNFA83dt0pRXeipHnmo/edit?usp=sharing)
+
+*Manuscript* [here](https://docs.google.com/document/d/1vBUD3H7PPvaJc4gL45TGOKKsatZuMZtkQfMggRceGec/edit?usp=sharing)
 
 *Motivation*
 The MutPred suite (http://mutpred.mutdb.org/) is a collection of machine learning tools that predict the pathogenicity of protein-coding variants to infer molecular mechanisms of disease. MutPred tools currently support inputs and outputs aimed at the protein biochemistry world. That is fasta formatted amino acid sequences are used as the primary input. The challenges with this input format are that isolated amino acid sequences cannot be easily assigned to genomic locations and the genomics community (including clinical genomics) works in the chromosomal space and uses VCF (Varant Call Format: https://en.wikipedia.org/wiki/Variant_Call_Format) as their primary file format. 
