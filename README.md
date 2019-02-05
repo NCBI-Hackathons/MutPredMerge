@@ -8,14 +8,14 @@ The MutPred suite (http://mutpred.mutdb.org/) is a collection of machine learnin
 MutPred offers several advantages over other functional prediction methods (ref), list:   
 Hence, if MutPred were able to "read" a VCF and perform its calculations on variants that map to conincal forms of conceptually translated amino acid sequences, then MutPred's acceptance and use would increase in the genomics community to ...
 
-Acheiving the above goal requires an integrated workflow, that combines genomic tools designed to annoate data in VCF files with MutPred tools, that addresses issues with scalability, so that VCF files containing an order of 100,000 variants in a few hours. Becuase MutPred tools operation on idividual sequences, operations can be easily parallelized using multiple computer nodes with in a cluster to acheive scalability goals. 
+The above goal can be acheived through a scalable integrated workflow that combines genomic tools designed to annoate data sotred in VCF files with tools in the MutPred Suite. In terms of performance, this workflow should be to analyze VCF files containing an order of 100,000 variants in a few hours and be extensible with respect to VCF annoation. Becuase MutPred tools operation on idividual amino acid sequences, and in some cases subsquences, scalablity can beacheived through standard parallelization using multiple computer nodes within a cluster. Making such a system portable for wide use is enabled by employing a standardized worflow system and containerizing tools that have complex installation requirements.  
 
 ![alt text](https://github.com/NCBI-Hackathons/Mutpred_Consolidation/blob/master/mutpred_workflow.png "Workflow")
 
 Goals
 ---------
 * Implment a workflow manager to run and parallelize the pipeline
-* Use/compare VCF annoation tools
+* Use/compare different VCF annoation tools
 * Integrate data from other pipelines
 
 Annotation
@@ -25,7 +25,7 @@ Annotation
 
 Workflow
 --------
-* Snakemake - use snakemake as the workflow system - at first it looked like this would not be possible. When Snakemake was installed with conda, and then run, an error resulted. The output has several python messages and a final message pointing to an issue with a datrie dependencie. Google Searches with snakemake datrie yielded: 
+* Snakemake: at first it looked like this would not be possible. When Snakemake was installed with conda, and then run, an error resulted. The output has several python messages and a final message pointing to an issue with a datrie dependencie. Google Searches with snakemake datrie yielded: 
 (1) https://bitbucket.org/snakemake/snakemake/issues/934/installation-failed-in-python-37 and 
 (2) https://github.com/pytries/datrie/issues/52 indicating the error was related to snakemake's dependencie on datrie. The thread in (1) hinted to the solution in it's last message (2018-12-19) and (2) provided an additional explaination with the workaround by andersgs (2018-07-05) 
 
@@ -48,9 +48,8 @@ Stretch Goals
 * Dockerize
 * Integration of MutPred tools
 
-
 How to use
-
+------------
 Installation options:
 
 Testing
