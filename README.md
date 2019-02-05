@@ -2,18 +2,13 @@
 Consolidation of tools in the MutPred Package
 Mutation Prediction Integration
 
-
 *Motivation*
-MutPred suite - machine learning tools to predict the pathogenicity of protein-coding variants and infer molecular mechanisms of disease
-Currently, support inputs and outputs aimed at the protein biochemistry world
-The genomics community works in the chromosomal space in VCFs
+The MutPred suite (http://mutpred.mutdb.org/) is a collection of machine learning tools that predict the pathogenicity of protein-coding variants to infer molecular mechanisms of disease. MutPred tools currently support inputs and outputs aimed at the protein biochemistry world. That is fasta formatted amino acid sequences are used as the primary input. The challenges with this input format are that isolated amino acid sequences cannot be easily assigned to genomic locations and the genomics community (including clinical genomics) works in the chromosomal space and uses VCF (Varant Call Format: https://en.wikipedia.org/wiki/Variant_Call_Format) as their primary file format. 
 
-Access MutPred2 http://mutpred.mutdb.org/
+MutPred offers several advantages over other functional prediction methods (ref), list:   
+Hence, if MutPred were able to "read" a VCF and perform its calculations on variants that map to conincal forms of conceptually translated amino acid sequences, then MutPred's acceptance and use would increase in the genomics community to ...
 
-NEED TO BRIDGE THE GAP!!
-Build integrated workflow to support this and address issues with scalability - need to be able to run these tools on upto 100,000 variants
-Think about ways to make this more generic
-
+Acheiving the above goal requires an integrated workflow, that combines genomic tools designed to annoate data in VCF files with MutPred tools, that addresses issues with scalability, so that VCF files containing an order of 100,000 variants in a few hours. Becuase MutPred tools operation on idividual sequences, operations can be easily parallelized using multiple computer nodes with in a cluster to acheive scalability goals. 
 
 ![alt text](https://github.com/NCBI-Hackathons/Mutpred_Consolidation/blob/master/mutpred_workflow.png "Workflow")
 
@@ -34,7 +29,7 @@ Workflow
 (1) https://bitbucket.org/snakemake/snakemake/issues/934/installation-failed-in-python-37 and 
 (2) https://github.com/pytries/datrie/issues/52 indicating the error was related to snakemake's dependencie on datrie. The thread in (1) hinted to the solution in it's last message (2018-12-19) and (2) provided an additional explaination with the workaround by andersgs (2018-07-05) 
 
->> `wget https://github.com/pytries/datrie/archive/0.7.1.tar.gz`  
+> `wget https://github.com/pytries/datrie/archive/0.7.1.tar.gz`  
 `tar xf 0.7.1.tar.gz`  
 `cd datrie-0.7.1`  
 `./update_c.sh`  
@@ -45,7 +40,7 @@ Once the above lines were executed, snakemake worked.
 
 Parallezation
 -------------
-Missense are the most abundant might consider splitting these up
+Missense are the most abundant might consider splitting these up  
 2 minutes per missense variant currently
 
 Stretch Goals
