@@ -17,14 +17,20 @@ Think about ways to make this more generic
 
 ![alt text](https://github.com/NCBI-Hackathons/Mutpred_Consolidation/blob/master/mutpred_workflow.png "Workflow")
 
+*Goals*
+---------
+* Implment a workflow manager to run and parallelize the pipeline
+* Use/compare VCF annoation tools
+* Integrate data from other pipelines
+
 Annotation
 ----------
-* ANNOVAR?
+* ANNOVAR 
+* Cravat
 
 Workflow
 --------
-* Snake-make
-* CWL
+* Snakemake - use snakemake as the workflow system
 
 Parallezation
 -------------
