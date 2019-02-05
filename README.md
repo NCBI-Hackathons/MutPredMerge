@@ -36,9 +36,9 @@ Workflow
 
 `wget https://github.com/pytries/datrie/archive/0.7.1.tar.gz`
 `tar xf 0.7.1.tar.gz`  
-`cd datrie-0.7.1` 
-`./update_c.sh`  
-`python3.7 setup.py build`  
+`cd datrie-0.7.1`
+`./update_c.sh`
+`python3.7 setup.py build`
 `python3.7 setup.py install`
 Once the above lines were executed, snakemake worked. 
 
