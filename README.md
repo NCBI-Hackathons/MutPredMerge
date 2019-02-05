@@ -17,7 +17,7 @@ Think about ways to make this more generic
 
 ![alt text](https://github.com/NCBI-Hackathons/Mutpred_Consolidation/blob/master/mutpred_workflow.png "Workflow")
 
-*Goals*
+Goals
 ---------
 * Implment a workflow manager to run and parallelize the pipeline
 * Use/compare VCF annoation tools
