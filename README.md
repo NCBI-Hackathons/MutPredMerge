@@ -2,7 +2,7 @@
 Consolidation of tools in the MutPred Package
 Mutation Prediction Integration
 
-*Update* ![alt text](https://docs.google.com/presentation/d/1Fp9yuV2slaYAni1wY5unc3VICNFA83dt0pRXeipHnmo/edit?usp=sharing "Slides")
+*Update* ![Slides](https://docs.google.com/presentation/d/1Fp9yuV2slaYAni1wY5unc3VICNFA83dt0pRXeipHnmo/edit?usp=sharing  "Slides")
 
 
 *Motivation*
