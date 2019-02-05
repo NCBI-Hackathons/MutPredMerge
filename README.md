@@ -30,7 +30,20 @@ Annotation
 
 Workflow
 --------
-* Snakemake - use snakemake as the workflow system
+* Snakemake - use snakemake as the workflow system - at first it looked like this would not be possible. When Snakemake was installed with conda, and then run, an error resulted. The output has several python messages and a final message pointing to an issue with a datrie dependencie. Google Searches with snakemake datrie yielded: 
+(1) https://bitbucket.org/snakemake/snakemake/issues/934/installation-failed-in-python-37 and 
+(2) https://github.com/pytries/datrie/issues/52 indicating the error was related to snakemake's dependencie on datrie. The thread in (1) hinted to the solution in it's last message (2018-12-19) and (2) provided an additional explaination with the workaround by andersgs (2018-07-05) 
+
+`wget https://github.com/pytries/datrie/archive/0.7.1.tar.gz 
+tar xf 0.7.1.tar.gz 
+cd datrie-0.7.1 
+./update_c.sh 
+python3.7 setup.py build 
+python3.7 setup.py install`
+
+Once the above lines were executed, snakemake worked. 
+
+
 
 Parallezation
 -------------
