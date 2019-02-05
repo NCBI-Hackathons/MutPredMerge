@@ -48,6 +48,13 @@ How to use
 Installation options:
 
 Testing
+--------------
+Initial pipeline:
+VCF file -> annovar -> translations (protein sequences) + mutations(SNPs, Indels, Splice Variants)
+protein sequences -> MutPred Software Suite -> outputs
+
+Descript in Snakemake file
+Run the pipelline
 
 Additional Functionality
 
