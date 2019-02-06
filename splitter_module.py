@@ -47,6 +47,6 @@ if __name__ == "__main__":
     filename_parts = filename.split("/")[-1].split(".")
     
     if filename_parts[-1] != "exonic_variant_function":
-        print "Error: must be exonic_variant_function file from annovar"
+        print ("Error: must be exonic_variant_function file from annovar")
     else:
         processing_exonic_variant_function(filename, filename_parts[0], threads)
