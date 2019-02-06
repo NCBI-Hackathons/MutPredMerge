@@ -15,6 +15,7 @@ def processing_exonic_variant_function(path, suffix, threads):
         os.makedirs("intermediates/splits/")
 
     missense = data[data[1] == "nonsynonymous SNV"]
+    print (missense)
     split_missense = pd.np.array_split(missense, threads)
     for i in range(threads):
         split_missense[i].to_csv("intermediates/splits/%s.missense_%s.exonic_variant_function" % (suffix, i), sep="\t", header=False, index=False)
