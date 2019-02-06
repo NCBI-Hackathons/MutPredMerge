@@ -1,19 +1,12 @@
-# Mutpred_Consolidation
-Consolidation of tools in the MutPred Package
-Mutation Prediction Integration
+# MutPred_Mixer
+Pipeline that integrates and parallelizes MutPred suite.
 
-* Download MutPred2 [here](http://mutpred.mutdb.org/index.html#dload)
-* Submit a query [here](http://mutpred.mutdb.org/index.html)
-
-**Updates** 
-[Slides](https://docs.google.com/presentation/d/1Fp9yuV2slaYAni1wY5unc3VICNFA83dt0pRXeipHnmo/edit?usp=sharing)
-
-**Manuscript** [Here](https://docs.google.com/document/d/1vBUD3H7PPvaJc4gL45TGOKKsatZuMZtkQfMggRceGec/edit?usp=sharing)
-
+* [Download](http://mutpred.mutdb.org/index.html#dload) MutPred2 
+* [Submit](http://mutpred.mutdb.org/index.html) a single protein mutation 
 
 Motivation
 ---------
-The MutPred suite (http://mutpred.mutdb.org/) is a collection of machine learning tools that predict the pathogenicity of protein-coding variants to infer molecular mechanisms of disease. MutPred tools currently support inputs and outputs aimed at the protein biochemistry world. That is fasta formatted amino acid sequences are used as the primary input. The challenges with this input format are that isolated amino acid sequences cannot be easily assigned to genomic locations and the genomics community (including clinical genomics) works in the chromosomal space and uses VCF (Varant Call Format: https://en.wikipedia.org/wiki/Variant_Call_Format) as their primary file format. 
+The MutPred suite (http://mutpred.mutdb.org/) is a collection of machine learning tools that predict the pathogenicity of protein-coding variants to infer molecular mechanisms of disease. MutPred takes in a fasta formatted amino acid sequences as the primary input. The challenges with this input format are that isolated amino acid sequences cannot be easily assigned to genomic locations and the genomics community (including clinical genomics) works in the chromosomal space and uses VCF (Varant Call Format: https://en.wikipedia.org/wiki/Variant_Call_Format) as their primary file format. 
 
 MutPred offers several advantages over other functional prediction methods (ref), list:   
 Hence, if MutPred were digest a VCF and perform its calculations on variants that map to conincal forms of conceptually translated amino acid sequences, then MutPred's acceptance and use would increase in the genomics community to ...
@@ -21,7 +14,7 @@ Hence, if MutPred were digest a VCF and perform its calculations on variants tha
 The above goal can be acheived through a scalable integrated workflow that combines genomic tools designed to annoate data sotred in VCF files with tools in the MutPred Suite. In terms of performance, this workflow should be to analyze VCF files containing an order of 100,000 variants in a few hours and be extensible with respect to VCF annoation. Becuase MutPred tools operation on idividual amino acid sequences, and in some cases subsquences, scalablity can beacheived through standard parallelization using multiple computer nodes within a cluster. Making such a system portable for wide use is enabled by employing a standardized worflow system and containerizing tools that have complex installation requirements.  
 
 **Workflow** ![Here](https://github.com/NCBI-Hackathons/Mutpred_Consolidation/blob/master/mutpred_workflow.png "Workflow")
-**Workflow2** [Here](https://docs.google.com/drawings/d/1K82kxgp6OYccRhUak_vzbA3sk6ERMYB-eNRHvFq8JGo/edit?usp=sharing)
+* [Link](https://docs.google.com/drawings/d/1K82kxgp6OYccRhUak_vzbA3sk6ERMYB-eNRHvFq8JGo/edit?usp=sharing) to Workflow
 
 Goals
 ---------
@@ -34,12 +27,14 @@ Annotation
 * ANNOVAR 
 * Cravat
 
-Workflow
+Installation and Dependencies
 --------
-* Snakemake: at first it looked like this would not be possible. When Snakemake was installed with conda, and then run, an error resulted. The output has several python messages and a final message pointing to an issue with a datrie dependencie. Google Searches with snakemake datrie yielded: 
+* Snakemake: Current conda installation of Snakemake has datrie dependency failure:
+See bug:
 (1) https://bitbucket.org/snakemake/snakemake/issues/934/installation-failed-in-python-37 and 
-(2) https://github.com/pytries/datrie/issues/52 indicating the error was related to snakemake's dependencie on datrie. The thread in (1) hinted to the solution in it's last message (2018-12-19) and (2) provided an additional explaination with the workaround by andersgs (2018-07-05) 
+(2) https://github.com/pytries/datrie/issues/52 
 
+Update datrie dependency first. 
 ``` 
 wget https://github.com/pytries/datrie/archive/0.7.1.tar.gz
 tar xf 0.7.1.tar.gz
@@ -49,7 +44,7 @@ python3.7 setup.py build
 python3.7 setup.py install  
 ```
 
-Once the above lines were executed, snakemake worked. 
+Normal conda installation of Snakemake should work
 
 Parallezation
 -------------
@@ -78,6 +73,11 @@ Testing
 
 Additional Functionality
 
+[Slides](https://docs.google.com/presentation/d/1Fp9yuV2slaYAni1wY5unc3VICNFA83dt0pRXeipHnmo/edit?usp=sharing)
+
+
 Cite
 ----
+In Process: [Manuscript](https://docs.google.com/document/d/1vBUD3H7PPvaJc4gL45TGOKKsatZuMZtkQfMggRceGec/edit?usp=sharing)
+
 Pejaver V, Urresti J, Lugo-Martinez J, Pagel KA, Lin GN, Nam H, Mort M, Cooper DN, Sebat J, Iakoucheva LM, Mooney SD, Radivojac P. MutPred2: inferring the molecular and phenotypic impact of amino acid variants. bioRxiv 134981; doi: https://doi.org/10.1101/134981.

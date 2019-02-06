@@ -1,0 +1,3 @@
+NameError in line 24 of /home/ubuntu/Mutpred_Consolidation/Snakefile:
+name 'todd' is not defined
+  File "/home/ubuntu/Mutpred_Consolidation/Snakefile", line 24, in <module>
