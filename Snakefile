@@ -15,7 +15,8 @@ rule all:
 		"todd-test/" + BASE + ".exonic_variant_function",
 		"todd-test/" + BASE + ".log",
 		"todd-test/" + BASE + ".variant_function",
-		"Mutpred_Consolidation/intermediates/splits/" + BASE + ".{variant_type}_0.exonic_variant_function",
+		"Mutpred_Consolidation/intermediates/splits/" + BASE + ".missense_0.exonic_variant_function",
+		"Mutpred_Consolidation/intermediates/splits/" + BASE + ".LOF_0.exonic_variant_function",
 		"data/mutpred_sample_files/outputs/input_mutpredlof_codingchange",
 		"data/mutpred_sample_files/outputs/input_mutpred2_codingchange_output.txt",
 		"data/mutpred_sample_files/outputs/input_mutpredindel_codingchange"
@@ -56,7 +57,8 @@ rule splitter:
 	input:
         	rules.annovar_annotate.output.var_fxn
 	output:
-		"Mutpred_Consolidation/intermediates/splits/" + BASE + ".{variant_type}_0.exonic_variant_function"
+		"Mutpred_Consolidation/intermediates/splits/" + BASE + ".missense_0.exonic_variant_function",
+		"Mutpred_Consolidation/intermediates/splits/" + BASE + ".LOF_0.exonic_variant_function"
 	shell:
 		"{params.cmd} {input}"
 
