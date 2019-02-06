@@ -1,7 +1,6 @@
 # MutPred_Mixer
 Pipeline that integrates and parallelizes MutPred suite.
 
-
 * [Download](http://mutpred.mutdb.org/index.html#dload) MutPred2 
 * [Submit](http://mutpred.mutdb.org/index.html) a single protein mutation 
 
@@ -30,10 +29,12 @@ Annotation
 
 Installation and Dependencies
 --------
-* Snakemake: at first it looked like this would not be possible. When Snakemake was installed with conda, and then run, an error resulted. The output has several python messages and a final message pointing to an issue with a datrie dependencie. Google Searches with snakemake datrie yielded: 
+* Snakemake: Current conda installation of Snakemake has datrie dependency failure:
+See bug:
 (1) https://bitbucket.org/snakemake/snakemake/issues/934/installation-failed-in-python-37 and 
-(2) https://github.com/pytries/datrie/issues/52 indicating the error was related to snakemake's dependencie on datrie. The thread in (1) hinted to the solution in it's last message (2018-12-19) and (2) provided an additional explaination with the workaround by andersgs (2018-07-05) 
+(2) https://github.com/pytries/datrie/issues/52 
 
+Update datrie dependency first. 
 ``` 
 wget https://github.com/pytries/datrie/archive/0.7.1.tar.gz
 tar xf 0.7.1.tar.gz
@@ -43,7 +44,7 @@ python3.7 setup.py build
 python3.7 setup.py install  
 ```
 
-Once the above lines were executed, snakemake worked. 
+Normal conda installation of Snakemake should work
 
 Parallezation
 -------------
