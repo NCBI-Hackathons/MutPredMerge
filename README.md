@@ -2,6 +2,9 @@
 Consolidation of tools in the MutPred Package
 Mutation Prediction Integration
 
+* Download MutPred2 [here](http://mutpred.mutdb.org/index.html#dload)
+* Submit a query [here](http://mutpred.mutdb.org/index.html)
+
 **Updates** 
 [Slides](https://docs.google.com/presentation/d/1Fp9yuV2slaYAni1wY5unc3VICNFA83dt0pRXeipHnmo/edit?usp=sharing)
 
@@ -75,3 +78,6 @@ Testing
 
 Additional Functionality
 
+Cite
+----
+Pejaver V, Urresti J, Lugo-Martinez J, Pagel KA, Lin GN, Nam H, Mort M, Cooper DN, Sebat J, Iakoucheva LM, Mooney SD, Radivojac P. MutPred2: inferring the molecular and phenotypic impact of amino acid variants. bioRxiv 134981; doi: https://doi.org/10.1101/134981.
