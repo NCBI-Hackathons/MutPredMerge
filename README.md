@@ -1,8 +1,5 @@
 # MutPredMerge
-Pipeline that integrates and parallelizes MutPred suite.
-
-* [Download](http://mutpred.mutdb.org/index.html#dload) MutPred2 
-* [Submit](http://mutpred.mutdb.org/index.html) a single protein mutation 
+Workflow that integrates and parallelizes MutPred suite.
 
 Motivation
 ---------
@@ -27,6 +24,7 @@ Future Directions
 
 Installation and Dependencies
 --------
+* [MutPred2](http://mutpred.mutdb.org/index.html#dload)
 * Snakemake: Current conda installation of Snakemake has datrie dependency failure:
 See bug:
 (1) https://bitbucket.org/snakemake/snakemake/issues/934/installation-failed-in-python-37 and 
