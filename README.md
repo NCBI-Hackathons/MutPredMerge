@@ -12,13 +12,12 @@ The MutPred suite offers several advantages over other functional prediction met
 * Tools in the MutPred suite have been shown to be among the top-performing methods in independent assessments and community-wide experiments
 * Apart from general pathogenicity scores, the MutPred tools return a ranked list of putative molecular mechanisms, thus generating hypotheses for further experimental follow-up.
 
-Hence, if MutPred were to digest a VCF containing DNA sequence variants and perform its calculations on those variants that map to conincal forms of conceptually translated amino acid sequences, then MutPred's acceptance and use would increase in the genomics community to ultimately add in clinical DNA sequence analaysis. In particular MutPred's prediction capabiliies could aid in improving the annoation of variants of uncertain significance.
+Hence, if MutPred were to ingest a VCF containing DNA sequence variants and perform its calculations on those variants that map to conincal forms of conceptually translated amino acid sequences, then MutPred's acceptance and use would increase in the genomics community to ultimately aid in clinical DNA sequence analaysis. In particular MutPred's prediction capabiliies could improve the annoation of variants of uncertain significance.
 
 The above goal can be acheived through a scalable integrated workflow that combines genomic tools designed to annoate data sotred in VCF files with tools in the MutPred Suite. In terms of performance, this workflow should be to analyze VCF files containing an order of 100,000 variants in a few hours and be extensible with respect to VCF annoation. Becuase MutPred tools operation on idividual amino acid sequences, and in some cases subsquences, scalablity can beacheived through standard parallelization using multiple computer nodes within a cluster. Making such a system portable for wide use is enabled by employing a standardized worflow system and containerizing tools that have complex installation requirements.  
 
 **Workflow** ![Here](https://github.com/NCBI-Hackathons/Mutpred_Consolidation/blob/master/mutpred_workflow.png "Workflow")
 * [Link](https://docs.google.com/drawings/d/1K82kxgp6OYccRhUak_vzbA3sk6ERMYB-eNRHvFq8JGo/edit?usp=sharing) to Workflow
-
 
 Future Directions
 -----------------
@@ -46,14 +45,13 @@ python3.7 setup.py install
 
 Normal conda installation of Snakemake should work
 
-
-How to use
+Usage
 ------------
-Installation options:
+Installation options: install snakemake, and dependent software (TBD)
+Obtain the Snakefile
 
-Run options:
-
-
+To run a pipleline type
+>snakemake
 
 [Slides](https://docs.google.com/presentation/d/1Fp9yuV2slaYAni1wY5unc3VICNFA83dt0pRXeipHnmo/edit?usp=sharing)
 
