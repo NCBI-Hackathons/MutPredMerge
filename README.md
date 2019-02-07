@@ -8,11 +8,11 @@ Motivation
 ---------
 The MutPred suite (http://mutpred.mutdb.org/) is a collection of machine learning tools that predict the pathogenicity of protein-coding variants to infer molecular mechanisms of disease. MutPred takes in a fasta formatted amino acid sequences as the primary input. The challenges with this input format are that isolated amino acid sequences cannot be easily assigned to genomic locations and the genomics community (including clinical genomics) works in the chromosomal space and uses VCF (Varant Call Format: https://en.wikipedia.org/wiki/Variant_Call_Format) as their primary file format. 
 
-The MutPred suite offers several advantages over other functional prediction methods, list:
+The MutPred suite offers several advantages over other functional prediction methods:
 * Tools in the MutPred suite have been shown to be among the top-performing methods in independent assessments and community-wide experiments
 * Apart from general pathogenicity scores, the MutPred tools return a ranked list of putative molecular mechanisms, thus generating hypotheses for further experimental follow-up.
 
-Hence, if MutPred were digest a VCF and perform its calculations on variants that map to conincal forms of conceptually translated amino acid sequences, then MutPred's acceptance and use would increase in the genomics community to ...
+Hence, if MutPred were to digest a VCF containing DNA sequence variants and perform its calculations on those variants that map to conincal forms of conceptually translated amino acid sequences, then MutPred's acceptance and use would increase in the genomics community to ultimately add in clinical DNA sequence analaysis. In particular MutPred's prediction capabiliies could aid in improving the annoation of variants of uncertain significance.
 
 The above goal can be acheived through a scalable integrated workflow that combines genomic tools designed to annoate data sotred in VCF files with tools in the MutPred Suite. In terms of performance, this workflow should be to analyze VCF files containing an order of 100,000 variants in a few hours and be extensible with respect to VCF annoation. Becuase MutPred tools operation on idividual amino acid sequences, and in some cases subsquences, scalablity can beacheived through standard parallelization using multiple computer nodes within a cluster. Making such a system portable for wide use is enabled by employing a standardized worflow system and containerizing tools that have complex installation requirements.  
 
