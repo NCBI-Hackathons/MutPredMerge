@@ -1,4 +1,4 @@
-# MutPred_Mixer
+# MutPredMerge
 Pipeline that integrates and parallelizes MutPred suite.
 
 * [Download](http://mutpred.mutdb.org/index.html#dload) MutPred2 
@@ -8,24 +8,22 @@ Motivation
 ---------
 The MutPred suite (http://mutpred.mutdb.org/) is a collection of machine learning tools that predict the pathogenicity of protein-coding variants to infer molecular mechanisms of disease. MutPred takes in a fasta formatted amino acid sequences as the primary input. The challenges with this input format are that isolated amino acid sequences cannot be easily assigned to genomic locations and the genomics community (including clinical genomics) works in the chromosomal space and uses VCF (Varant Call Format: https://en.wikipedia.org/wiki/Variant_Call_Format) as their primary file format. 
 
-MutPred offers several advantages over other functional prediction methods (ref), list:   
-Hence, if MutPred were digest a VCF and perform its calculations on variants that map to conincal forms of conceptually translated amino acid sequences, then MutPred's acceptance and use would increase in the genomics community to ...
+The MutPred suite offers several advantages over other functional prediction methods:
+* Tools in the MutPred suite have been shown to be among the top-performing methods in independent assessments and community-wide experiments
+* Apart from general pathogenicity scores, the MutPred tools return a ranked list of putative molecular mechanisms, thus generating hypotheses for further experimental follow-up.
+
+Hence, if MutPred were to ingest a VCF containing DNA sequence variants and perform its calculations on those variants that map to conincal forms of conceptually translated amino acid sequences, then MutPred's acceptance and use would increase in the genomics community to ultimately aid in clinical DNA sequence analaysis. In particular MutPred's prediction capabiliies could improve the annoation of variants of uncertain significance.
 
 The above goal can be acheived through a scalable integrated workflow that combines genomic tools designed to annoate data sotred in VCF files with tools in the MutPred Suite. In terms of performance, this workflow should be to analyze VCF files containing an order of 100,000 variants in a few hours and be extensible with respect to VCF annoation. Becuase MutPred tools operation on idividual amino acid sequences, and in some cases subsquences, scalablity can beacheived through standard parallelization using multiple computer nodes within a cluster. Making such a system portable for wide use is enabled by employing a standardized worflow system and containerizing tools that have complex installation requirements.  
 
-**Workflow** ![Here](https://github.com/NCBI-Hackathons/Mutpred_Consolidation/blob/master/mutpred_workflow.png "Workflow")
+**Workflow** ![Here](https://github.com/NCBI-Hackathons/Mutpred_Consolidation/blob/master/mutpred_workflow.png "Conceptual Workflow")
 * [Link](https://docs.google.com/drawings/d/1K82kxgp6OYccRhUak_vzbA3sk6ERMYB-eNRHvFq8JGo/edit?usp=sharing) to Workflow
 
-Goals
----------
-* Implment a workflow manager to run and parallelize the pipeline
-* Use/compare different VCF annoation tools
-* Integrate data from other pipelines
-
-Annotation
-----------
-* ANNOVAR 
-* Cravat
+Future Directions
+-----------------
+* Implement support for other annotation tools - SNPeff, VARANT, OpenCRAVAT 
+* Think about containerization and accessibility to users
+* Scale up to cloud and HPC environments
 
 Installation and Dependencies
 --------
@@ -46,32 +44,13 @@ python3.7 setup.py install
 
 Normal conda installation of Snakemake should work
 
-Parallezation
--------------
-Missense are the most abundant might consider splitting these up  
-2 minutes per missense variant currently
-
-Stretch Goals
--------------
-* Dockerize
-* Integration of MutPred tools
-
-How to use
+Usage
 ------------
-Installation options:
+Installation options: install snakemake, and dependent software (TBD)
+Obtain the Snakefile
 
-Testing
---------------
-1. Initial pipeline:  
-  VCF file -> annovar -> translations (protein sequences) + mutations(SNPs, Indels, Splice Variants)  
-  protein sequences -> MutPred Software Suite -> outputs  
-  Descripe in Snakemake file  
-  Run the pipelline  
-  Verify output  
-2. Parallelize operation  
-  groups of protein sequences -> MutPred Software Suite -> outputs
-
-Additional Functionality
+To run a pipleline type
+>snakemake
 
 [Slides](https://docs.google.com/presentation/d/1Fp9yuV2slaYAni1wY5unc3VICNFA83dt0pRXeipHnmo/edit?usp=sharing)
 
