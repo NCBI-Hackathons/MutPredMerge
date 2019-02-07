@@ -19,11 +19,12 @@ rule all:
 		"/home/ubuntu/Mutpred_Consolidation/intermediates/splits/" + BASE + ".indels_0.exonic_variant_function",
                 "/home/ubuntu/Mutpred_Consolidation/intermediates/splits/" + BASE + ".missense_0.exonic_variant_function",
                 "/home/ubuntu/Mutpred_Consolidation/intermediates/splits/" + BASE + ".LOF_0.exonic_variant_function",
+                "/home/ubuntu/Mutpred_Consolidation/intermediates/faa/" + BASE + ".missense_0.faa",
 		"data/mutpred_sample_files/outputs/input_mutpredlof_codingchange",
 		"data/mutpred_sample_files/outputs/input_mutpred2_codingchange_output.txt",
 		"data/mutpred_sample_files/outputs/input_mutpredindel_codingchange"
 
-ruleorder: annovar_convert > annovar_annotate > splitter> MutPred2 > MutPred_LOF > MutPred_indel 
+ruleorder: annovar_convert > annovar_annotate > splitter > coding_change > MutPred2 > MutPred_LOF > MutPred_indel 
 
 # first run annovar - there are two steps
 rule annovar_convert:
@@ -58,13 +59,26 @@ rule splitter:
 		cmd="python Mutpred_Consolidation/splitter_module.py",
                 output="/home/ubuntu/Mutpred_Consolidation/intermediates/splits"
 	input:
-        	rules.annovar_annotate.output.var_fxn
+                rules.annovar_annotate.output.var_fxn
 	output:
 		"/home/ubuntu/Mutpred_Consolidation/intermediates/splits/" + BASE + ".indels_0.exonic_variant_function",
-		"/home/ubuntu/Mutpred_Consolidation/intermediates/splits/" + BASE + ".missense_0.exonic_variant_function",
-		"/home/ubuntu/Mutpred_Consolidation/intermediates/splits/" + BASE + ".LOF_0.exonic_variant_function"
+		"/home/ubuntu/Mutpred_Consolidation/intermediates/splits/" + BASE + ".LOF_0.exonic_variant_function",
+                var_missense="/home/ubuntu/Mutpred_Consolidation/intermediates/splits/" + BASE + ".missense_0.exonic_variant_function"
 	shell:
 		"{params.cmd} --target {input} --output /home/ubuntu/Mutpred_Consolidation/intermediates/splits"
+
+rule coding_change:
+        params:
+                cmd="tools/annovar/coding_change.pl",
+                ops="-includesnp",
+                refGeneMrna="tools/annovar/humandb/hg19_refGeneMrna.fa",
+                refGene="tools/annovar/humandb/hg19_refGene.txt"
+        input:
+                rules.splitter.output.var_missense
+        output:
+                "/home/ubuntu/Mutpred_Consolidation/intermediates/faa/" + BASE + ".missense_0.faa"
+        shell:
+                "{params.cmd} {params.ops} {input} {params.refGeneMrna} {params.refGene} > {output}"
 
 rule MutPred2:
 	input:
