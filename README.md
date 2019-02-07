@@ -10,7 +10,8 @@ The MutPred suite (http://mutpred.mutdb.org/) is a collection of machine learnin
 
 The MutPred suite offers several advantages over other functional prediction methods, list:
 * Tools in the MutPred suite have been shown to be among the top-performing methods in independent assessments and community-wide experiments
-* 
+* Apart from general pathogenicity scores, the MutPred tools return a ranked list of putative molecular mechanisms, thus generating hypotheses for further experimental follow-up.
+
 Hence, if MutPred were digest a VCF and perform its calculations on variants that map to conincal forms of conceptually translated amino acid sequences, then MutPred's acceptance and use would increase in the genomics community to ...
 
 The above goal can be acheived through a scalable integrated workflow that combines genomic tools designed to annoate data sotred in VCF files with tools in the MutPred Suite. In terms of performance, this workflow should be to analyze VCF files containing an order of 100,000 variants in a few hours and be extensible with respect to VCF annoation. Becuase MutPred tools operation on idividual amino acid sequences, and in some cases subsquences, scalablity can beacheived through standard parallelization using multiple computer nodes within a cluster. Making such a system portable for wide use is enabled by employing a standardized worflow system and containerizing tools that have complex installation requirements.  
@@ -28,6 +29,7 @@ Future Directions
 Installation and Dependencies
 --------
 * Snakemake: Current conda installation of Snakemake has datrie dependency failure:
+* 
 See bug:
 (1) https://bitbucket.org/snakemake/snakemake/issues/934/installation-failed-in-python-37 and 
 (2) https://github.com/pytries/datrie/issues/52 
