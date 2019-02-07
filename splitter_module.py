@@ -14,6 +14,7 @@ def processing_exonic_variant_function(path, output, suffix, threads):
     if os.path.isdir(output):
         pass
     else:
+        os.makedirs(output + "/../faa/")
         os.makedirs(output)
 
     missense = data[data[1] == "nonsynonymous SNV"]
