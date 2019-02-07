@@ -28,7 +28,6 @@ Future Directions
 Installation and Dependencies
 --------
 * Snakemake: Current conda installation of Snakemake has datrie dependency failure:
-* 
 See bug:
 (1) https://bitbucket.org/snakemake/snakemake/issues/934/installation-failed-in-python-37 and 
 (2) https://github.com/pytries/datrie/issues/52 
