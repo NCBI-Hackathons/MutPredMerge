@@ -6,6 +6,7 @@ BASE    = "small_sample"
 
 
 #VCFFILE, = glob_wildcards("data/{vcf}.vcf")
+VARTYPES = ["missense, LOF, indels"]
 
 # final output is the input
 # for glob_wildcard, will likely need an expand here
@@ -15,8 +16,9 @@ rule all:
 		"todd-test/" + BASE + ".exonic_variant_function",
 		"todd-test/" + BASE + ".log",
 		"todd-test/" + BASE + ".variant_function",
-		"Mutpred_Consolidation/intermediates/splits/" + BASE + ".missense_0.exonic_variant_function",
-		"Mutpred_Consolidation/intermediates/splits/" + BASE + ".LOF_0.exonic_variant_function",
+		"/home/ubuntu/Mutpred_Consolidation/intermediates/splits/" + BASE + ".indels_0.exonic_variant_function",
+                "/home/ubuntu/Mutpred_Consolidation/intermediates/splits/" + BASE + ".missense_0.exonic_variant_function",
+                "/home/ubuntu/Mutpred_Consolidation/intermediates/splits/" + BASE + ".LOF_0.exonic_variant_function",
 		"data/mutpred_sample_files/outputs/input_mutpredlof_codingchange",
 		"data/mutpred_sample_files/outputs/input_mutpred2_codingchange_output.txt",
 		"data/mutpred_sample_files/outputs/input_mutpredindel_codingchange"
@@ -53,14 +55,16 @@ rule annovar_annotate:
 
 rule splitter:
 	params:
-		cmd="Mutpred_Consolidation/splitter_module.py"
+		cmd="python Mutpred_Consolidation/splitter_module.py",
+                output="/home/ubuntu/Mutpred_Consolidation/intermediates/splits"
 	input:
         	rules.annovar_annotate.output.var_fxn
 	output:
-		"Mutpred_Consolidation/intermediates/splits/" + BASE + ".missense_0.exonic_variant_function",
-		"Mutpred_Consolidation/intermediates/splits/" + BASE + ".LOF_0.exonic_variant_function"
+		"/home/ubuntu/Mutpred_Consolidation/intermediates/splits/" + BASE + ".indels_0.exonic_variant_function",
+		"/home/ubuntu/Mutpred_Consolidation/intermediates/splits/" + BASE + ".missense_0.exonic_variant_function",
+		"/home/ubuntu/Mutpred_Consolidation/intermediates/splits/" + BASE + ".LOF_0.exonic_variant_function"
 	shell:
-		"{params.cmd} {input}"
+		"{params.cmd} --target {input} --output /home/ubuntu/Mutpred_Consolidation/intermediates/splits"
 
 rule MutPred2:
 	input:
