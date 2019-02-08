@@ -1,2 +1,9 @@
 .snakemake
 .Snakefile.*
+tools/
+intermediates/
+bin
+data
+include
+lib
+
