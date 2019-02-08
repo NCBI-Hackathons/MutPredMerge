@@ -1,6 +1,7 @@
 .snakemake
 .Snakefile.*
-tools/
+tools/annovar
+tools/mutpred2.0
 intermediates/
 bin
 data
