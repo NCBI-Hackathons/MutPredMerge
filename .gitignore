@@ -1,3 +1,5 @@
+.snakemake
+intermediates/
 .Snakefile.*
 tools/annovar
 tools/mutpred2.0
