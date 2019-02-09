@@ -14,7 +14,6 @@ def processing_exonic_variant_function(path, output, suffix, threads):
     if os.path.isdir(output):
         pass
     else:
-        os.makedirs(output + "/../faa/")
         os.makedirs(output)
 
     missense = data[data[1] == "nonsynonymous SNV"]
@@ -32,7 +31,7 @@ def processing_exonic_variant_function(path, output, suffix, threads):
     split_LOF = pd.np.array_split(LOF, threads)
     for i in range(threads):
         split_LOF[i].to_csv(output + "/%s.LOF_%s.exonic_variant_function" % (suffix, i), sep="\t", header=False, index=False)
-    return None
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process an exonic_variant_function from annovar.')
@@ -55,4 +54,13 @@ if __name__ == "__main__":
         print ("Error: must be exonic_variant_function file from annovar")
     else:
         processing_exonic_variant_function(filename, output, filename_parts[0], threads)
-        print ("we have processed this crap")
+        print ("----------------------------")
+        print ("Current working directory:", os.getcwd())
+        print ("Should've been created here:", output + filename_parts[0] + ".missense_0.exonic_variant_function")
+        print ("Missense file has been created:", "intermediates/splits/small_sample.missense_0.exonic_variant_function", os.path.isdir("intermediates/splits/small_sample.missense_0.exonic_variant_function"))
+        print ("How about this one:", os.getcwd() + "/intermediates/splits/small_sample.missense_0.exonic_variant_function", os.path.isdir("intermediates/splits/small_sample.missense_0.exonic_variant_function"))
+        print ("/Users/admin/Documents/Research/Mutpred_Consolidation/intermediates/splits/small_sample.missense_0.exonic_variant_function", os.path.isdir("/Users/admin/Documents/Research/Mutpred_Consolidation/intermediates/splits/small_sample.missense_0.exonic_variant_function"))
+        print ("splitter has finished")
+        for i in os.listdir("/Users/admin/Documents/Research/Mutpred_Consolidation/intermediates/splits/"):
+            print (i, os.path.isdir("/Users/admin/Documents/Research/Mutpred_Consolidation/intermediates/splits/" + i))
+        print ("----------------------------")

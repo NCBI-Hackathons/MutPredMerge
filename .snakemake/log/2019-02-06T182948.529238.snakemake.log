@@ -1,4 +1,0 @@
-Building DAG of jobs...
-MissingInputException in line 15 of /home/ubuntu/Mutpred_Consolidation/Snakefile:
-Missing input files for rule annovar_convert:
-data/small_sample.vcf

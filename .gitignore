@@ -1,2 +1,8 @@
-.snakemake
 .Snakefile.*
+tools/annovar
+tools/mutpred2.0
+bin
+data
+include
+lib
+
