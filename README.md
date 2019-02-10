@@ -1,15 +1,14 @@
 # MutPredMerge
 Workflow that integrates and parallelizes use of the MutPred suite with VCF files.
 ## Content
-[Motavation](#motavation)<br>
-[Installation](#installation)<br>
+[Motavation](#motivation)<br>
+[Installation](#installation-and-dependencies)<br>
 [Usage](#usage)<br>
 [Other Resources](#resources)<br>
-[Citation](#citation)
+[Citation](#cite)
 
 
 ## Motivation
-<a href="#motavation"></a>
 The [MutPred suite](http://mutpred.mutdb.org/) is a collection of machine learning tools that predict the pathogenicity of protein-coding variants to infer molecular mechanisms of disease. MutPred takes in a fasta formatted amino acid sequences as the primary input. The challenges with this input format are that isolated amino acid sequences cannot be easily assigned to genomic locations and the genomics community (including clinical genomics) works in the chromosomal space and uses VCF ([Varant Call Format](https://en.wikipedia.org/wiki/Variant_Call_Format)) as their primary file format. 
 
 The MutPred suite offers several advantages over other functional prediction methods:
@@ -113,12 +112,10 @@ chr1	877831	.	T	C	1485.12	PASS	AB=0;ABP=0;AC=4;ADP=45;AF=1;AN=4;AO=48;CIGAR=1X;D
 ```
 
 ## Resources
-<a href="#resources"></a>
 [Slides](https://docs.google.com/presentation/d/1Fp9yuV2slaYAni1wY5unc3VICNFA83dt0pRXeipHnmo/edit?usp=sharing)
 
 
 ## Cite
-<a href="#citation"></a>
 In Process: [Manuscript](https://docs.google.com/document/d/1vBUD3H7PPvaJc4gL45TGOKKsatZuMZtkQfMggRceGec/edit?usp=sharing)
 
 Pejaver V, Urresti J, Lugo-Martinez J, Pagel KA, Lin GN, Nam H, Mort M, Cooper DN, Sebat J, Iakoucheva LM, Mooney SD, Radivojac P. MutPred2: inferring the molecular and phenotypic impact of amino acid variants. bioRxiv 134981; doi: https://doi.org/10.1101/134981.
