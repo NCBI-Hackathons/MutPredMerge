@@ -38,7 +38,10 @@ python3.7 setup.py build
 python3.7 setup.py install  
 ```
 
-Normal conda installation of Snakemake should work after this.
+Normal conda [installation](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html) of Snakemake should work after this.
+```
+conda install -c bioconda -c conda-forge snakemake
+```
 
 ## MutPred Suite
 
