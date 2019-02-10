@@ -108,11 +108,12 @@ The pipeline outputs the above variables in the following form.
 ```
 MPMANN=line1855|NM_152486|c.T1027C;MPMTOOL=MP2;MPMSCORE=0.078;MPMMECH=Gain_of_Intrinsic_disorder,Altered_MoRF,Gain_of_Helix;MPMPROB=0.51,0.30,0.27;MPMPVAL=1.5e-03,0.02,0.05
 ```
-The interpretation of this output is that the annotated variant:<br>
-(1) is a missense variant that was scored by MutPred2 (MPMTOOL=MP2)<br>
-(2) has a pathogenicity score of 0.078 (MPMSCORE=0.078, very low)<br>
-(3) has three molecular mechanisms that are predicted to be impacted (MPMMECH=Gain_of_Intrinsic_disorder, Altered_MoRF, Gain_of_Helix)<br>
-(4) each of these predicted mechanisms have cooresponding probabilities (MPMPROB=0.51, 0.30, 0.27) and p-values (MPMPVAL=1.5e-03, 0.02, 0.05) for how likely these mechanisms are actually affected.
+Interpretation of this output for the annotated variant:<br>
+(1) Annovar annotated the variant with the RefSeq accession NM_152486, the HGVS notation c.T1027C, and the line number of the variant in the .exonic_variant_function file.<br>
+(2) The variant is a missense variant that was scored by MutPred2 (MPMTOOL=MP2)<br>
+(3) It has a pathogenicity score of 0.078 (MPMSCORE=0.078, very low)<br>
+(4) It has three molecular mechanisms that are predicted to be impacted (MPMMECH=Gain_of_Intrinsic_disorder, Altered_MoRF, Gain_of_Helix)<br>
+(5) Each of these predicted mechanisms have cooresponding probabilities (MPMPROB=0.51, 0.30, 0.27) and p-values (MPMPVAL=1.5e-03, 0.02, 0.05) for how likely these mechanisms are actually affected.
 
 These variables are added to the end of the existing INFO strings
 ```
