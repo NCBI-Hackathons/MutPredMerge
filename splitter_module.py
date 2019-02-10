@@ -18,21 +18,21 @@ def processing_exonic_variant_function(path, output, suffix, threads):
 
 
     missense = data[data[1] == "nonsynonymous SNV"]
-    missense = missense.head(5)
+    #missense = missense.head(5)
     split_missense = pd.np.array_split(missense, threads)
     for i in range(threads):
         split_missense[i].to_csv(output + "/%s.missense_%s.exonic_variant_function" % (suffix, i), sep="\t", header=False, index=False)
 
 
     indels = data[data[1].isin(["nonframeshift substitution","nonframeshift deletion","nonframeshift insertion"])]
-    indels = indels.head(5)
+    #indels = indels.head(5)
     split_indels = pd.np.array_split(indels, threads)
     for i in range(threads):
         split_indels[i].to_csv(output + "/%s.indels_%s.exonic_variant_function" % (suffix, i), sep="\t", header=False, index=False)
 
 
     LOF = data[data[1].isin(["stopgain", "frameshift deletion", "frameshift insertion", "frameshift substitution"])]
-    LOF = LOF.head(5)
+    #LOF = LOF.head(5)
     split_LOF = pd.np.array_split(LOF, threads)
     for i in range(threads):
         split_LOF[i].to_csv(output + "/%s.LOF_%s.exonic_variant_function" % (suffix, i), sep="\t", header=False, index=False)

@@ -123,5 +123,5 @@ rule merge:
 	output: 
 		MAIN_DIR + "data/" + BASE + ".vcf.tmp"
 	shell:
-		"python mutpred_merge.py --base" + BASE
+		"python mutpred_merge.py --base " + BASE
 
