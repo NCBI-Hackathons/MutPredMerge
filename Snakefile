@@ -1,31 +1,33 @@
-workdir: "/Users/admin/Documents/Research/Mutpred_Consolidation"
+
 
 # want to get this from the command line, or a directory
+
+
+# paths and directories
+MAIN_DIR = "/data/common/MutPredMerge/"
 VCFFILE = "data/small_sample.vcf"
 BASE    = "small_sample"
 
-
-#VCFFILE, = glob_wildcards("data/{vcf}.vcf")
+# wildcars
 VARTYPES = ["missense", "LOF", "indels"]
-ANNOVAR = ["exonic_variant_function, log, variant_function"]
+ANNOVAR = ["exonic_variant_function", "log", "variant_function"]
 
 
 # final output is the input
 # for glob_wildcard, will likely need an expand here
 rule all:
 	input:
-		"intermediates/annovar/" + BASE + ".full.avinput",
-		"intermediates/annovar/" + BASE + ".exonic_variant_function",
-		expand("intermediates/splits/" + BASE + ".{vartype}_0.exonic_variant_function", vartype=VARTYPES),
-		## expand("/Users/admin/Documents/Research/Mutpred_Consolidation/intermediates/splits/" + BASE + ".missense_0.exonic_variant_function", vartype=VARTYPES),
-                expand("intermediates/faa/" + BASE + ".{vartype}_0.faa", vartype=VARTYPES)
-		
-		# "data/mutpred_sample_files/outputs/input_mutpredlof_codingchange",
-		# "data/mutpred_sample_files/outputs/input_mutpred2_codingchange_output.txt",
-		# "data/mutpred_sample_files/outputs/input_mutpredindel_codingchange"
-		
+		MAIN_DIR + "intermediates/annovar/" + BASE + ".full.avinput",
+		MAIN_DIR + "intermediates/annovar/" + BASE + ".exonic_variant_function",
+		expand(MAIN_DIR + "intermediates/splits/" + BASE + ".{vartype}_0.exonic_variant_function", vartype=VARTYPES),
+        expand(MAIN_DIR + "intermediates/faa/" + BASE + ".{vartype}_0.faa", vartype=VARTYPES),
+		MAIN_DIR + "intermediates/scores/" + BASE + ".missense_0.csv",
+		MAIN_DIR + "intermediates/scores/" + BASE + ".LOF_0_output.txt",
+		MAIN_DIR + "intermediates/scores/" + BASE + ".indels_0_output.txt",
+		MAIN_DIR + "data/" + BASE + ".vcf.tmp"
 
-ruleorder: annovar_convert > annovar_annotate > splitter > coding_change # > MutPred2 > MutPred_LOF > MutPred_indel 
+
+ruleorder: annovar_convert > annovar_annotate > splitter > coding_change > MutPred2 > MutPred_LOF > MutPred_indel > merge
 
 # first run annovar - there are two steps
 rule annovar_convert:
@@ -35,7 +37,7 @@ rule annovar_convert:
 	input:
 		VCFFILE
 	output:
-		"intermediates/annovar/" + BASE + ".full.avinput"
+		MAIN_DIR + "intermediates/annovar/" + BASE + ".full.avinput"
 	shell:
 		"{params.cmd} {params.ops} {input} > {output}"
 
@@ -48,7 +50,7 @@ rule annovar_annotate:
 		rules.annovar_convert.output, # output from step 1
 		refdir="tools/annovar/humandb/"
 	output:
-		var_fxn="intermediates/annovar/" + BASE + ".exonic_variant_function"
+		var_fxn=MAIN_DIR + "intermediates/annovar/" + BASE + ".exonic_variant_function"
 	shell:
 		"{params.cmd} {params.ops} {input} --outfile {params.annotate}"
 
@@ -59,7 +61,7 @@ rule splitter:
 	input:
                 rules.annovar_annotate.output.var_fxn
 	output:
-		var_split="intermediates/splits/" + BASE + ".{vartype}_0.exonic_variant_function"
+		splits=MAIN_DIR + "intermediates/splits/" + BASE + ".{vartype}_0.exonic_variant_function"
 	shell:
 		"{params.cmd} --target {input} --output {params.output_folder}"
 
@@ -70,38 +72,50 @@ rule coding_change:
                 refGeneMrna="tools/annovar/humandb/hg19_refGeneMrna.fa",
                 refGene="tools/annovar/humandb/hg19_refGene.txt"
         input:
-                rules.splitter.output.var_split
+                rules.splitter.output.splits
         output:
-                faa_file="intermediates/faa/" + BASE + ".{vartype}_0.faa"
+                faa_file=MAIN_DIR + "intermediates/faa/" + BASE + ".{vartype}_0.faa"
         shell:
                 "{params.cmd} {params.ops} {input} {params.refGene} {params.refGeneMrna} > {output}"
 
-"""
+
 rule MutPred2:
 	input:
-		"intermediates/faa/" + BASE + ".missense_0.faa"
+		MAIN_DIR + "intermediates/faa/" + BASE + ".missense_0.faa"
 	output:
-		"scores/" + BASE + ".mutpred2.missense_0.csv"
-
-	shell: "tools/mutpred2.0/run_mutpred2.sh -i {input} -p 1 -c 1 -b 0 -t 0.05 -f 2 -o {output}"
+		MAIN_DIR + "intermediates/scores/" + BASE + ".missense_0.csv"
+	shell: 
+		"tools/mutpred2.0/run_mutpred2.sh -i {input} -p 1 -c 1 -b 0 -t 0.05 -f 2 -o {output}"
 
 
 rule MutPred_LOF:
+	params:
+		outfile_prefix=MAIN_DIR + "intermediates/scores/" + BASE + ".LOF_0"
 	input:	
-		"data/mutpred_sample_files/inputs/input_mutpredlof_codingchange"
+		MAIN_DIR + "intermediates/faa/" + BASE + ".LOF_0.faa"
 	output:
-		"data/mutpred_sample_files/outputs/input_mutpredlof_codingchange"
-
+		MAIN_DIR + "intermediates/scores/" + BASE + ".LOF_0_output.txt"
 	shell:
-		"tools/MutPredLOF/run_MutPredLOF.sh /tools/mutpred2.0/v91/ {input} {output}"
+		"cd tools/MutPredLOF && ./run_MutPredLOF.sh v91/ {input} {params.outfile_prefix}"
 
 rule MutPred_indel:
+	params:
+		outfile_prefix=MAIN_DIR + "intermediates/scores/" + BASE + ".indels_0"
 	input:
-		"data/mutpred_sample_files/inputs/input_mutpredindel_codingchange"
+		MAIN_DIR + "intermediates/faa/" + BASE + ".indels_0.faa"
 	output:
-		"data/mutpred_sample_files/outputs/input_mutpredindel_codingchange"	
+		MAIN_DIR + "intermediates/scores/" + BASE + ".indels_0_output.txt"
 	shell:
-		"tools/MutPredIndel_compiled/run_MutPredIndel.sh /tools/mutpred2.0/v91/ {input} {output}"
-"""
-rule end:
-	output: BASE + ".end"
+		"cd tools/MutPredIndel_compiled && ./run_MutPredIndel.sh v91/ {input} {params.outfile_prefix}"
+
+
+rule merge:
+	input:
+		MAIN_DIR + "intermediates/scores/" + BASE + ".LOF_0_output.txt",
+		MAIN_DIR + "intermediates/scores/" + BASE + ".indels_0_output.txt",
+		MAIN_DIR + "intermediates/scores/" + BASE + ".missense_0.csv"
+	output: 
+		MAIN_DIR + "data/" + BASE + ".vcf.tmp"
+	shell:
+		"python mutpred_merge.py --base" + BASE
+
