@@ -1,8 +1,7 @@
 # MutPredMerge
-Workflow that integrates and parallelizes MutPred suite.
+Workflow that integrates and parallelizes use of the MutPred suite with VCF files.
 
-Motivation
----------
+## Motivation
 The MutPred suite (http://mutpred.mutdb.org/) is a collection of machine learning tools that predict the pathogenicity of protein-coding variants to infer molecular mechanisms of disease. MutPred takes in a fasta formatted amino acid sequences as the primary input. The challenges with this input format are that isolated amino acid sequences cannot be easily assigned to genomic locations and the genomics community (including clinical genomics) works in the chromosomal space and uses VCF (Varant Call Format: https://en.wikipedia.org/wiki/Variant_Call_Format) as their primary file format. 
 
 The MutPred suite offers several advantages over other functional prediction methods:
@@ -13,7 +12,7 @@ Hence, if MutPred were to ingest a VCF containing DNA sequence variants and perf
 
 The above goal can be acheived through a scalable integrated workflow that combines genomic tools designed to annoate data sotred in VCF files with tools in the MutPred Suite. In terms of performance, this workflow should be to analyze VCF files containing an order of 100,000 variants in a few hours and be extensible with respect to VCF annoation. Becuase MutPred tools operation on idividual amino acid sequences, and in some cases subsquences, scalablity can beacheived through standard parallelization using multiple computer nodes within a cluster. Making such a system portable for wide use is enabled by employing a standardized worflow system and containerizing tools that have complex installation requirements.  
 
-**Workflow** ![Here](https://github.com/NCBI-Hackathons/Mutpred_Consolidation/blob/master/mutpred_workflow.png "Conceptual Workflow")
+**Workflow** ![Here](data/mutpred_workflow.png "Conceptual Workflow")
 * [Link](https://docs.google.com/drawings/d/1K82kxgp6OYccRhUak_vzbA3sk6ERMYB-eNRHvFq8JGo/edit?usp=sharing) to Workflow
 
 Future Directions
@@ -22,9 +21,8 @@ Future Directions
 * Think about containerization and accessibility to users
 * Scale up to cloud and HPC environments
 
-Installation and Dependencies
---------
-* [MutPred2](http://mutpred.mutdb.org/index.html#dload)
+# Installation and Dependencies
+## Snakemake
 * Snakemake: Current conda installation of Snakemake has datrie dependency failure:
 See bug:
 (1) https://bitbucket.org/snakemake/snakemake/issues/934/installation-failed-in-python-37 and 
@@ -40,21 +38,57 @@ python3.7 setup.py build
 python3.7 setup.py install  
 ```
 
-Normal conda installation of Snakemake should work
+Normal conda installation of Snakemake should work after this.
 
-Usage
-------------
-Installation options: install snakemake, and dependent software (TBD)
-Obtain the Snakefile
+## MutPred Suite
 
-To run a pipleline type
->snakemake
+To install the MutPred Suite, run the install bash script in the main directory. **Beware**, the full MutPred suite, when unzipped, takes 84 Gb to store.
+```
+bash install.sh
+```
+ If you would like to install the different tools yourself, you can download them here:
+
+[MutPred2](http://mutpred.mutdb.org/#dload)
+
+[MutPredLOF](http://mutpredlof.cs.indiana.edu/#dload)
+
+[MutPred-Indel](http://mutpredindel.cs.indiana.edu/#dload)
+
+Put them into the [tools](/tools) directory and use *tar -xvzf* to unzip the tarballs. 
+
+## Annovar
+Do to licensing issues, we can't include Annovar into the source code. Go to [Annovar](http://annovar.openbioinformatics.org/en/latest/user-guide/download/) and fill out the form to receive a link to download the tool. Add the tool to the [tools](/tools) folder.
+
+Go to the main [annovar directory](/tools/annovar/) and run the command:
+```
+perl annotate_variation.pl -downdb -buildver hg19 -webfrom annovar refGene humandb/
+```
+This will download the necessary dependency files for this pipeline.
+
+## Usage
+
+To use the pipeline, edit the top three variables in the Snakefile:
+```
+MAIN_DIR = "/path/to/MutPredMerge/"
+VCFFILE = "/path/to/example.vcf"
+BASE    = "example"
+```
+Make sure the BASE variable is the same as the vcf filename without the ".vcf"
+
+To run the pipleline type
+```
+snakemake
+```
+Depending on your computational resources, each variant can take 2 minutes or more to score. If you have many variants, we recommend you run the pipeline in the background.
+```
+nohup snakemake &
+```
+## Resources
 
 [Slides](https://docs.google.com/presentation/d/1Fp9yuV2slaYAni1wY5unc3VICNFA83dt0pRXeipHnmo/edit?usp=sharing)
 
 
-Cite
-----
+## Cite
 In Process: [Manuscript](https://docs.google.com/document/d/1vBUD3H7PPvaJc4gL45TGOKKsatZuMZtkQfMggRceGec/edit?usp=sharing)
 
 Pejaver V, Urresti J, Lugo-Martinez J, Pagel KA, Lin GN, Nam H, Mort M, Cooper DN, Sebat J, Iakoucheva LM, Mooney SD, Radivojac P. MutPred2: inferring the molecular and phenotypic impact of amino acid variants. bioRxiv 134981; doi: https://doi.org/10.1101/134981.

@@ -4,13 +4,19 @@
 
 
 # paths and directories
+
+# This needs to be the absolute path to the current directory
 MAIN_DIR = "/data/common/MutPredMerge/"
+
+# This can be either the relative or absolute path to your target vcf file
 VCFFILE = "data/small_sample.vcf"
+
+# Make sure this is the same as the filename of your VCF file, just minus the ".vcf".
 BASE    = "small_sample"
+
 
 # wildcars
 VARTYPES = ["missense", "LOF", "indels"]
-ANNOVAR = ["exonic_variant_function", "log", "variant_function"]
 
 
 # final output is the input
