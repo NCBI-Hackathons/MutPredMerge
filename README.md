@@ -107,11 +107,18 @@ The pipeline outputs the above variables in the following form.
 MPMANN=line1855|NM_152486|c.T1027C;MPMTOOL=MP2;MPMSCORE=0.078;MPMMECH=Gain_of_Intrinsic_disorder,Altered_MoRF,Gain_of_Helix;MPMPROB=0.51,0.30,0.27;MPMPVAL=1.5e-03,0.02,0.05
 ```
 #### Interpretation of the output for the annotated variant
-1. Annovar annotated the variant with the RefSeq accession NM_152486, the HGVS notation c.T1027C, and the line number of the variant in the .exonic_variant_function file.
-2. The variant is a missense variant that was scored by MutPred2 (MPMTOOL=MP2)
-3. It has a pathogenicity score of 0.078 (MPMSCORE=0.078, very low)
-4. It has three molecular mechanisms that are predicted to be impacted (MPMMECH=Gain_of_Intrinsic_disorder, Altered_MoRF, Gain_of_Helix)
-5. Each of these predicted mechanisms have cooresponding probabilities (MPMPROB=0.51, 0.30, 0.27) and p-values (MPMPVAL=1.5e-03, 0.02, 0.05) for how likely these mechanisms are actually affected.
+1. MPMANN=line1855|NM_152486|c.T1027C
+   * Annovar annotated the variant with the RefSeq accession NM_152486, the HGVS notation c.T1027C, and the line number of the variant in the .exonic_variant_function file.
+2. MPMTOOL=MP2
+   * The variant is a missense variant that was scored by MutPred2 (MP2).
+3. MPMSCORE=0.078
+   * MutPred2 predicted the variant has a pathogenicity score of 0.078 (very low)
+4. MPMMECH=Gain_of_Intrinsic_disorder, Altered_MoRF, Gain_of_Helix
+   * MutPred2 predicted that the protein has three molecular mechanisms that are impacted by the variant.
+5. MPMPROB=0.51, 0.30, 0.27
+   * Each of the predicted mechanisms have cooresponding probabilities for how likely these mechanisms are actually affected.
+6. MPMPVAL=1.5e-03, 0.02, 0.05
+   * Each of the predicted mechanisms have cooresponding p-values for how likely these mechanisms are actually affected.
 
 These variables are added to the end of the existing INFO strings
 ```
