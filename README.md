@@ -45,7 +45,7 @@ conda install -c bioconda -c conda-forge snakemake
 
 ## MutPred Suite
 
-To install the MutPred Suite, run the install bash script in the main directory. **Beware**, the full MutPred suite, when unzipped, takes 84 Gb to store.
+To install the MutPred Suite, run the install bash script in the main directory. **Beware**, the full MutPred suite, when unzipped, takes 90 Gb to store.
 ```
 bash install.sh
 ```
@@ -60,7 +60,7 @@ bash install.sh
 Put them into the [tools](/tools) directory and use *tar -xvzf* to unzip the tarballs. 
 
 ## Annovar
-Do to licensing issues, we can't include Annovar into the source code. Go to [Annovar](http://annovar.openbioinformatics.org/en/latest/user-guide/download/) and fill out the form to receive a link to download the tool. Add the tool to the [tools](/tools) folder.
+Do to licensing issues, we can't include Annovar in the source code. Go to [Annovar](http://annovar.openbioinformatics.org/en/latest/user-guide/download/) and fill out the form to receive a link to download the tool. Add the package to the [tools](/tools) folder.
 
 Go to the main [annovar directory](/tools/annovar/) and run the command:
 ```
