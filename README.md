@@ -29,7 +29,6 @@ The above goal can be acheived through a scalable integrated workflow that combi
 * Scale up to cloud and HPC environments
 
 # Installation and Dependencies
-<a href="#installation"></a>
 ## Snakemake
 * Snakemake: Current conda installation of Snakemake has datrie dependency failure:
 See bug:
@@ -75,7 +74,6 @@ perl annotate_variation.pl -downdb -buildver hg19 -webfrom annovar refGene human
 This will download the necessary dependency files for this pipeline.
 
 # Usage
-<a href="#usage"></a>
 ## Running MutPredMerge
 To use the pipeline, edit the top three variables in the Snakefile:
 ```
@@ -103,17 +101,17 @@ INFO=<ID=MPMMECH,Number=.,Type=String,Description="Predicted molecular mechanism
 INFO=<ID=MPMPROB,Number=.,Type=Float,Description="Posterior probability for each molecular mechanism">
 INFO=<ID=MPMPVAL,Number=.,Type=Float,Description="P-value for each molecular mechanism">
 ```
-#### Example Annotated Variant
+### Example Annotated Variant
 The pipeline outputs the above variables in the following form.
 ```
 MPMANN=line1855|NM_152486|c.T1027C;MPMTOOL=MP2;MPMSCORE=0.078;MPMMECH=Gain_of_Intrinsic_disorder,Altered_MoRF,Gain_of_Helix;MPMPROB=0.51,0.30,0.27;MPMPVAL=1.5e-03,0.02,0.05
 ```
-Interpretation of this output for the annotated variant:<br>
-(1) Annovar annotated the variant with the RefSeq accession NM_152486, the HGVS notation c.T1027C, and the line number of the variant in the .exonic_variant_function file.<br>
-(2) The variant is a missense variant that was scored by MutPred2 (MPMTOOL=MP2)<br>
-(3) It has a pathogenicity score of 0.078 (MPMSCORE=0.078, very low)<br>
-(4) It has three molecular mechanisms that are predicted to be impacted (MPMMECH=Gain_of_Intrinsic_disorder, Altered_MoRF, Gain_of_Helix)<br>
-(5) Each of these predicted mechanisms have cooresponding probabilities (MPMPROB=0.51, 0.30, 0.27) and p-values (MPMPVAL=1.5e-03, 0.02, 0.05) for how likely these mechanisms are actually affected.
+#### Interpretation of the output for the annotated variant
+1. Annovar annotated the variant with the RefSeq accession NM_152486, the HGVS notation c.T1027C, and the line number of the variant in the .exonic_variant_function file.
+2. The variant is a missense variant that was scored by MutPred2 (MPMTOOL=MP2)
+3. It has a pathogenicity score of 0.078 (MPMSCORE=0.078, very low)
+4. It has three molecular mechanisms that are predicted to be impacted (MPMMECH=Gain_of_Intrinsic_disorder, Altered_MoRF, Gain_of_Helix)
+5. Each of these predicted mechanisms have cooresponding probabilities (MPMPROB=0.51, 0.30, 0.27) and p-values (MPMPVAL=1.5e-03, 0.02, 0.05) for how likely these mechanisms are actually affected.
 
 These variables are added to the end of the existing INFO strings
 ```
