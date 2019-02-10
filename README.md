@@ -1,7 +1,7 @@
 # MutPredMerge
 Workflow that integrates and parallelizes use of the MutPred suite with VCF files.
 ## Content
-[Motavation](#motivation)<br>
+[Motivation](#motivation)<br>
 [Installation](#installation-and-dependencies)<br>
 [Usage](#usage)<br>
 [Other Resources](#resources)<br>
