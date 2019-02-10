@@ -59,10 +59,8 @@ bash install.sh
 ```
  If you would like to install the different tools yourself, you can download them here:
 
-[MutPred2](http://mutpred.mutdb.org/#dload)
-
-[MutPredLOF](http://mutpredlof.cs.indiana.edu/#dload)
-
+[MutPred2](http://mutpred.mutdb.org/#dload)<br>
+[MutPredLOF](http://mutpredlof.cs.indiana.edu/#dload)<br>
 [MutPred-Indel](http://mutpredindel.cs.indiana.edu/#dload)
 
 Put them into the [tools](/tools) directory and use *tar -xvzf* to unzip the tarballs. 
@@ -96,7 +94,7 @@ Depending on your computational resources, each variant can take 2 minutes or mo
 nohup snakemake &
 ```
 ## Output
-The pipeline outputs a copy of the input vcf file ("example.vcf") that has the scored variants annotated in [data/example.vcf.tmp](data/example.vcf.tmp). The unscored variants are ignored and no changes are made, but the scored variants will have six new variable values in the INFO section.
+The pipeline outputs a copy of the input vcf file (example.vcf) that has the scored variants annotated in data/example.vcf.tmp. The unscored variants are ignored and no changes are made, but the scored variants will have six new variable values in the INFO section.
 ```
 INFO=<ID=MPMANN,Number=1,Type=String,Description="Annotation from ANNOVAR in the transcript and protein space">
 INFO=<ID=MPMTOOL,Number=1,Type=String,Description="Name of software run from MutPred suite: MP2 for MutPred2 (missense), MPL for MutPred-LOF (loss-of-function) and MPI for MutPred-Indel (non-frameshifting indels)">
@@ -106,6 +104,17 @@ INFO=<ID=MPMPROB,Number=.,Type=Float,Description="Posterior probability for each
 INFO=<ID=MPMPVAL,Number=.,Type=Float,Description="P-value for each molecular mechanism">
 ```
 #### Example Annotated Variant
+The pipeline outputs the above variables in the following form.
+```
+MPMANN=line1855|NM_152486|c.T1027C;MPMTOOL=MP2;MPMSCORE=0.078;MPMMECH=Gain_of_Intrinsic_disorder,Altered_MoRF,Gain_of_Helix;MPMPROB=0.51,0.30,0.27;MPMPVAL=1.5e-03,0.02,0.05
+```
+The interpretation of this output is that the annotated variant:<br>
+(1) is a missense variant that was scored by MutPred2 (MPMTOOL=MP2)<br>
+(2) has a pathogenicity score of 0.078 (MPMSCORE=0.078, very low)<br>
+(3) has three molecular mechanisms that are predicted to be impacted (MPMMECH=Gain_of_Intrinsic_disorder, Altered_MoRF, Gain_of_Helix)<br>
+(4) each of these predicted mechanisms have cooresponding probabilities (MPMPROB=0.51, 0.30, 0.27) and p-values (MPMPVAL=1.5e-03, 0.02, 0.05) for how likely these mechanisms are actually affected.
+
+These variables are added to the end of the existing INFO strings
 ```
 #CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT
 chr1	877831	.	T	C	1485.12	PASS	AB=0;ABP=0;AC=4;ADP=45;AF=1;AN=4;AO=48;CIGAR=1X;DP=49;DPB=49;DPRA=0;EPP=11.8771;EPPR=0;GTI=0;HET=0;HOM=1;LEN=1;MEANALT=2;MQM=60;MQMR=0;NC=0;NS=1;NUMALT=1;ODDS=70.0487;PAIRED=1;PAIREDR=0;PAO=0;PQA=0;PQR=0;PRO=0;QA=1694;QR=0;RO=0;RPL=25;RPP=3.19126;RPPR=0;RPR=23;RUN=1;SAF=20;SAP=5.9056;SAR=28;SF=0,1;SRF=0;SRP=0;SRR=0;TYPE=snp;WT=0;MPMANN=line1855|NM_152486|c.T1027C;MPMTOOL=MP2;MPMSCORE=0.078;MPMMECH=Gain_of_Intrinsic_disorder,Altered_MoRF,Gain_of_Helix;MPMPROB=0.51,0.30,0.27;MPMPVAL=1.5e-03,0.02,0.05	GT:ADF:RO:PVAL:GL:GQ:RD:RBQ:SDP:QA:RDR:RDF:ABQ:AO:AD:DP:QR:ADR:FREQ
