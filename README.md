@@ -62,12 +62,12 @@ bash install.sh
 [MutPredLOF](http://mutpredlof.cs.indiana.edu/#dload)<br>
 [MutPred-Indel](http://mutpredindel.cs.indiana.edu/#dload)
 
-Put them into the [tools](/tools) directory and use *tar -xvzf* to unzip the tarballs. 
+Put them into the [tools](/tools) directory and use *tar -xvzf* to unzip the tarballs. You will need to find and download the MATLAB MCR in order to run MutPredLOF and MutPred-Indel. MutPred2 comes with a MATLAB MCR so copying that folder into the other two is an option. Just pointing to the MutPred2 MCR directory creates path issues. 
 
 ## Annovar
-Do to licensing issues, we can't include Annovar in the source code. Go to [Annovar](http://annovar.openbioinformatics.org/en/latest/user-guide/download/) and fill out the form to receive a link to download the tool. Add the package to the [tools](/tools) folder.
+Due to licensing issues, we can't include Annovar in the source code. Go to [Annovar](http://annovar.openbioinformatics.org/en/latest/user-guide/download/) and fill out the form to receive a link to download the tool. Add the package to the [tools](/tools) folder.
 
-Go to the main [annovar directory](/tools/annovar/) and run the command:
+Go to the main annovar directory (/tools/annovar/) and run the command:
 ```
 perl annotate_variation.pl -downdb -buildver hg19 -webfrom annovar refGene humandb/
 ```

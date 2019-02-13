@@ -8,6 +8,8 @@ import argparse
 
 def processing_exonic_variant_function(path, output, suffix, threads):
 
+    test_num = 10*2
+
     data = pd.read_csv(path, delimiter="\t", header=None)
     data = data.applymap(str)
 
@@ -18,21 +20,24 @@ def processing_exonic_variant_function(path, output, suffix, threads):
 
 
     missense = data[data[1] == "nonsynonymous SNV"]
-    #missense = missense.head(5)
+    if test_num:
+        missense = missense.head(test_num)
     split_missense = pd.np.array_split(missense, threads)
     for i in range(threads):
         split_missense[i].to_csv(output + "/%s.missense_%s.exonic_variant_function" % (suffix, i), sep="\t", header=False, index=False)
 
 
     indels = data[data[1].isin(["nonframeshift substitution","nonframeshift deletion","nonframeshift insertion"])]
-    #indels = indels.head(5)
+    if test_num:
+        indels = indels.head(test_num)
     split_indels = pd.np.array_split(indels, threads)
     for i in range(threads):
         split_indels[i].to_csv(output + "/%s.indels_%s.exonic_variant_function" % (suffix, i), sep="\t", header=False, index=False)
 
 
     LOF = data[data[1].isin(["stopgain", "frameshift deletion", "frameshift insertion", "frameshift substitution"])]
-    #LOF = LOF.head(5)
+    if test_num:
+        LOF = LOF.head(test_num)
     split_LOF = pd.np.array_split(LOF, threads)
     for i in range(threads):
         split_LOF[i].to_csv(output + "/%s.LOF_%s.exonic_variant_function" % (suffix, i), sep="\t", header=False, index=False)
@@ -53,6 +58,8 @@ if __name__ == "__main__":
     output = args.output[0]
     threads = args.threads
     
+    print (threads)
+
     filename_parts = filename.split("/")[-1].split(".")
     
     if filename_parts[-1] != "exonic_variant_function":

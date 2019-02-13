@@ -1,5 +1,5 @@
 
-
+configfile: "config.json"
 # want to get this from the command line, or a directory
 
 
@@ -17,23 +17,21 @@ BASE    = "small_sample"
 
 # wildcars
 VARTYPES = ["missense", "LOF", "indels"]
-
+ALL_THREADS = [num for num in range(config["num_threads"])]
+NUM_THREADS = max(ALL_THREADS) + 1
 
 # final output is the input
 # for glob_wildcard, will likely need an expand here
+
 rule all:
 	input:
-		MAIN_DIR + "intermediates/annovar/" + BASE + ".full.avinput",
-		MAIN_DIR + "intermediates/annovar/" + BASE + ".exonic_variant_function",
-		expand(MAIN_DIR + "intermediates/splits/" + BASE + ".{vartype}_0.exonic_variant_function", vartype=VARTYPES),
-        expand(MAIN_DIR + "intermediates/faa/" + BASE + ".{vartype}_0.faa", vartype=VARTYPES),
-		MAIN_DIR + "intermediates/scores/" + BASE + ".missense_0.csv",
-		MAIN_DIR + "intermediates/scores/" + BASE + ".LOF_0_output.txt",
-		MAIN_DIR + "intermediates/scores/" + BASE + ".indels_0_output.txt",
-		MAIN_DIR + "data/" + BASE + ".vcf.tmp"
+		expand(MAIN_DIR + "intermediates/faa/" + BASE + ".{vartype}_{num_threads}.faa", vartype=VARTYPES, num_threads=ALL_THREADS),
+		expand(MAIN_DIR + "intermediates/scores/" + BASE + ".{vartype}_{num_threads}_output.txt", vartype=VARTYPES, num_threads=ALL_THREADS),
+		MAIN_DIR + "data/" + BASE + ".annotated.vcf",
+		MAIN_DIR + "data/" + BASE + ".scored.vcf"
 
 
-ruleorder: annovar_convert > annovar_annotate > splitter > coding_change > MutPred2 > MutPred_LOF > MutPred_indel > merge
+ruleorder: annovar_convert > annovar_annotate > splitter > coding_change > MutPred2 > MutPred_LOF > MutPred_indel > Merge
 
 # first run annovar - there are two steps
 rule annovar_convert:
@@ -67,61 +65,71 @@ rule splitter:
 	input:
                 rules.annovar_annotate.output.var_fxn
 	output:
-		splits=MAIN_DIR + "intermediates/splits/" + BASE + ".{vartype}_0.exonic_variant_function"
+		expand(MAIN_DIR + "intermediates/splits/" + BASE + ".{vartype}_{num_threads}.exonic_variant_function", vartype=VARTYPES, num_threads=ALL_THREADS)
+	threads:
+		NUM_THREADS
 	shell:
-		"{params.cmd} --target {input} --output {params.output_folder}"
+		"{params.cmd} -threads " + str(NUM_THREADS) + " --target {input} --output {params.output_folder}"
 
 rule coding_change:
-        params:
-                cmd="tools/annovar/coding_change.pl",
-                ops="-includesnp",
-                refGeneMrna="tools/annovar/humandb/hg19_refGeneMrna.fa",
-                refGene="tools/annovar/humandb/hg19_refGene.txt"
-        input:
-                rules.splitter.output.splits
-        output:
-                faa_file=MAIN_DIR + "intermediates/faa/" + BASE + ".{vartype}_0.faa"
-        shell:
-                "{params.cmd} {params.ops} {input} {params.refGene} {params.refGeneMrna} > {output}"
+	params:
+			cmd="perl tools/annovar/coding_change.pl",
+			ops="-includesnp",
+			refGeneMrna="tools/annovar/humandb/hg19_refGeneMrna.fa",
+			refGene="tools/annovar/humandb/hg19_refGene.txt"
+	input:
+			MAIN_DIR + "intermediates/splits/" + BASE + ".{vartype}_{num_threads}.exonic_variant_function"
+	output:
+			MAIN_DIR + "intermediates/faa/" + BASE + ".{vartype}_{num_threads}.faa"
+	threads:
+		1
+	shell:
+			"{params.cmd} {input} {params.refGene} {params.refGeneMrna} {params.ops} > {output}"
 
 
 rule MutPred2:
 	input:
-		MAIN_DIR + "intermediates/faa/" + BASE + ".missense_0.faa"
+		MAIN_DIR + "intermediates/faa/" + BASE + ".missense_{num_threads}.faa"
 	output:
-		MAIN_DIR + "intermediates/scores/" + BASE + ".missense_0.csv"
+		MP2=MAIN_DIR + "intermediates/scores/" + BASE + ".missense_{num_threads}_output.txt"
+	threads:
+		2
 	shell: 
-		"tools/mutpred2.0/run_mutpred2.sh -i {input} -p 1 -c 1 -b 0 -t 0.05 -f 2 -o {output}"
+		"cd tools/mutpred2.0 && ./run_mutpred2.sh -i {input} -p 1 -c 1 -b 0 -t 0.05 -f 2 -o {output}"
 
 
 rule MutPred_LOF:
 	params:
-		outfile_prefix=MAIN_DIR + "intermediates/scores/" + BASE + ".LOF_0"
+		outfile_prefix=MAIN_DIR + "intermediates/scores/" + BASE + ".LOF_{num_threads}"
 	input:	
-		MAIN_DIR + "intermediates/faa/" + BASE + ".LOF_0.faa"
+		MAIN_DIR + "intermediates/faa/" + BASE + ".LOF_{num_threads}.faa"
 	output:
-		MAIN_DIR + "intermediates/scores/" + BASE + ".LOF_0_output.txt"
+		MPL=MAIN_DIR + "intermediates/scores/" + BASE + ".LOF_{num_threads}_output.txt"
+	threads:
+		6
 	shell:
 		"cd tools/MutPredLOF && ./run_MutPredLOF.sh v91/ {input} {params.outfile_prefix}"
 
 rule MutPred_indel:
 	params:
-		outfile_prefix=MAIN_DIR + "intermediates/scores/" + BASE + ".indels_0"
+		outfile_prefix=MAIN_DIR + "intermediates/scores/" + BASE + ".indels_{num_threads}"
 	input:
-		MAIN_DIR + "intermediates/faa/" + BASE + ".indels_0.faa"
+		MAIN_DIR + "intermediates/faa/" + BASE + ".indels_{num_threads}.faa"
 	output:
-		MAIN_DIR + "intermediates/scores/" + BASE + ".indels_0_output.txt"
+		MPI=MAIN_DIR + "intermediates/scores/" + BASE + ".indels_{num_threads}_output.txt"
+	threads:
+		6
 	shell:
 		"cd tools/MutPredIndel_compiled && ./run_MutPredIndel.sh v91/ {input} {params.outfile_prefix}"
 
-
-rule merge:
+rule Merge:
 	input:
-		MAIN_DIR + "intermediates/scores/" + BASE + ".LOF_0_output.txt",
-		MAIN_DIR + "intermediates/scores/" + BASE + ".indels_0_output.txt",
-		MAIN_DIR + "intermediates/scores/" + BASE + ".missense_0.csv"
+		expand(MAIN_DIR + "intermediates/scores/" + BASE + ".{vartype}_{num_threads}_output.txt", vartype=VARTYPES, num_threads=ALL_THREADS)
 	output: 
-		MAIN_DIR + "data/" + BASE + ".vcf.tmp"
+		MAIN_DIR + "data/" + BASE + ".annotated.vcf",
+		MAIN_DIR + "data/" + BASE + ".scored.vcf"
+	threads:
+		NUM_THREADS
 	shell:
-		"python mutpred_merge.py --base " + BASE
+		"python mutpred_merge.py --vcf " + VCFFILE
 

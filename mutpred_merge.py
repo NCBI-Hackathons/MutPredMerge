@@ -138,9 +138,10 @@ def map_to_chrom(merged_results, base):
     return mapped_variants
 
 
-def map_to_vcf(mapped_variants, base):
-    orig_vcf = "data/" + base + ".vcf"
-    temp_vcf = "data/" + base + ".vcf.tmp"
+def map_to_vcf(mapped_variants, base, vcf):
+    orig_vcf = vcf
+    temp_vcf = "data/" + base + ".annotated.vcf"
+    scores_vcf = "data/" + base + ".scored.vcf"
 
     INFO = """##source=MutPredMerge
 ##INFO=<ID=MPMANN,Number=1,Type=String,Description="Annotation from ANNOVAR in the transcript and protein space">
@@ -151,41 +152,42 @@ def map_to_vcf(mapped_variants, base):
 ##INFO=<ID=MPMPVAL,Number=.,Type=Float,Description="P-value for each molecular mechanism">
 """
 
-    test = 0
     with open(orig_vcf, 'rU') as orig:
         with open(temp_vcf, "w") as out:
-            for line in orig:
-                if line.startswith("##"):
-                    out.write(line)
-                elif line.startswith("#C"):
-                    out.write(INFO)
-                    out.write(line)
-                else:
-                    split_line = line.split("\t")
-                    var_key = ",".join([split_line[0], split_line[1], split_line[3], split_line[4] ])
-
-                    try:
-                        MPM_INFO = mapped_variants[var_key]
-                        line = line.split("\t")
-                        line[7] = line[7] + ";" + MPM_INFO
-                        line = "\t".join(line)
+            with open(scores_vcf, "w") as scored:
+                for line in orig:
+                    if line.startswith("##"):
                         out.write(line)
-                        #del mapped_variants[var_key]
-                    except KeyError:
+                    elif line.startswith("#C"):
+                        out.write(INFO)
                         out.write(line)
+                    else:
+                        split_line = line.split("\t")
+                        var_key = ",".join([split_line[0], split_line[1], split_line[3], split_line[4] ])
+                        try:
+                            MPM_INFO = mapped_variants[var_key]
+                            line = line.split("\t")
+                            line[7] = line[7] + ";" + MPM_INFO
+                            line = "\t".join(line)
+                            out.write(line)
+                            scored.write(line)
+                            #del mapped_variants[var_key]
+                        except KeyError:
+                            out.write(line)
     #print (json.dumps(mapped_variants, indent=2))
 
 
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='Process an exonic_variant_function from annovar.')
-    parser.add_argument('--base', type=str, nargs=1,
-                        help='the base filename of the processed files')
+    parser.add_argument('--vcf', type=str, nargs=1,
+                        help='the original vcf filename')
 
     args = parser.parse_args()
 
-    base = args.base[0]
-    
+    vcf = args.vcf[0]
+    base = vcf.split("/")[-1].split(".")[-2]
+
     merged_variants = merge()
     mapped_variants = map_to_chrom(merged_variants, base)
-    map_to_vcf(mapped_variants, base)
+    map_to_vcf(mapped_variants, base, vcf)

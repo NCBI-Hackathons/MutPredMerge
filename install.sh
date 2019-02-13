@@ -11,6 +11,9 @@ while true; do
             wget --directory-prefix=tools/ http://mutpred.mutdb.org/mutpred2.0_linux_x86_64.tar.gz;
             tar -xvzf tools/mutpred2.0_linux_x86_64.tar.gz;
             rm tools/mutpred2.0_linux_x86_64.tar.gz;
+            printf "[NCBI]\nDATA=$(pwd)/tools/mutpred2.0/blast-2.2.18/data/" > tools/mutpred2.0/.ncbirc;
+            source tools/mutpred2.0/.ncbirc;
+            echo "ignore this error, all is fine";
 
             #download and unzip mutpred LOF
             wget --directory-prefix=tools/ http://mutpredlof.cs.indiana.edu/MutPredLOF_compiled.tar.gz;
