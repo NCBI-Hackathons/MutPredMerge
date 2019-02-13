@@ -78,8 +78,8 @@ This will download the necessary dependency files for this pipeline.
 To use the pipeline, edit the top three variables in the Snakefile:
 ```
 MAIN_DIR = "/path/to/MutPredMerge/"
-VCFFILE = "/path/to/example.vcf" # your target VCF file
-BASE    = "example"
+VCFFILE  = "/path/to/example.vcf" # your target VCF file
+BASE     = "example"
 ```
 Make sure the BASE variable is the same as the vcf filename without the ".vcf"
 
@@ -91,8 +91,17 @@ Depending on your computational resources, each variant can take 2 minutes or mo
 ```
 nohup snakemake &
 ```
+## Parallelization
+MutPredMerge automatically handles the parallelization process. Just run snakemake and assign a number of cores to the program.
+```
+snakemake --cores 10  #or your choice of available cores
+```
+Beware, MutPredLOF and MuPredIndel require substantial memory space. Future iterations of this project will add known memory limits needed for each of these programs, but currently, make sure you have at least 15 Gb of RAM available for every 6 threads (cores) you are running. This is the limit that we have found in our stress tests for this module.
+
 ## Output
-The pipeline outputs a copy of the input vcf file (example.vcf) that has the scored variants annotated in data/example.vcf.tmp. The unscored variants are ignored and no changes are made, but the scored variants will have six new variable values in the INFO section.
+The pipeline outputs two files into the [data](/data) folder: example.annotated.vcf and example.scored.vcf. Example.annotated.vcf is just a copy of the original vcf file but with the scored variants annotated with the outputs of the different MutPred tools. The unscored variants are ignored and no changes are made, but the scored variants will have six new variable values in the INFO section. Example.scored.vcf is a vcf file with just the scored variants with the six new variable values in the INFO section.
+
+### The six new variable values in INFO.
 ```
 INFO=<ID=MPMANN,Number=1,Type=String,Description="Annotation from ANNOVAR in the transcript and protein space">
 INFO=<ID=MPMTOOL,Number=1,Type=String,Description="Name of software run from MutPred suite: MP2 for MutPred2 (missense), MPL for MutPred-LOF (loss-of-function) and MPI for MutPred-Indel (non-frameshifting indels)">
