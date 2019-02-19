@@ -28,7 +28,8 @@ rule all:
 		expand(MAIN_DIR + "intermediates/faa/" + BASE + ".{vartype}_{num_threads}.faa", vartype=VARTYPES, num_threads=ALL_THREADS),
 		expand(MAIN_DIR + "intermediates/scores/" + BASE + ".{vartype}_{num_threads}_output.txt", vartype=VARTYPES, num_threads=ALL_THREADS),
 		MAIN_DIR + "data/" + BASE + ".annotated.vcf",
-		MAIN_DIR + "data/" + BASE + ".scored.vcf"
+		MAIN_DIR + "data/" + BASE + ".scored.vcf",
+		MAIN_DIR + "data/" + BASE + ".unscored.vcf"
 
 
 ruleorder: annovar_convert > annovar_annotate > splitter > coding_change > MutPred2 > MutPred_LOF > MutPred_indel > Merge
@@ -127,7 +128,8 @@ rule Merge:
 		expand(MAIN_DIR + "intermediates/scores/" + BASE + ".{vartype}_{num_threads}_output.txt", vartype=VARTYPES, num_threads=ALL_THREADS)
 	output: 
 		MAIN_DIR + "data/" + BASE + ".annotated.vcf",
-		MAIN_DIR + "data/" + BASE + ".scored.vcf"
+		MAIN_DIR + "data/" + BASE + ".scored.vcf",
+		MAIN_DIR + "data/" + BASE + ".unscored.vcf"
 	threads:
 		NUM_THREADS
 	shell:
