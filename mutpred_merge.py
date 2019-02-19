@@ -187,14 +187,17 @@ def map_to_vcf(mapped_variants, base, vcf):
 
 if __name__ == "__main__":
 
-    parser = argparse.ArgumentParser(description='Process an exonic_variant_function from annovar.')
+    parser = argparse.ArgumentParser(description='Combine all the scored variants into vcf files.')
     parser.add_argument('--vcf', type=str, nargs=1,
                         help='the original vcf filename')
 
     args = parser.parse_args()
 
     vcf = args.vcf[0]
+    print (vcf)
+
     base = vcf.split("/")[-1].split(".")[-2]
+    print (base)
 
     merged_variants = merge()
     mapped_variants = map_to_chrom(merged_variants, base)
