@@ -140,8 +140,9 @@ def map_to_chrom(merged_results, base):
 
 def map_to_vcf(mapped_variants, base, vcf):
     orig_vcf = vcf
-    temp_vcf = "data/" + base + ".annotated.vcf"
-    scores_vcf = "data/" + base + ".scored.vcf"
+    annotated_vcf = "data/" + base + ".annotated.vcf"
+    unscored_vcf = "data/" + base + ".unscored.vcf"
+    scored_vcf = "data/" + base + ".scored.vcf"
 
     INFO = """##source=MutPredMerge
 ##INFO=<ID=MPMANN,Number=1,Type=String,Description="Annotation from ANNOVAR in the transcript and protein space">
@@ -153,27 +154,34 @@ def map_to_vcf(mapped_variants, base, vcf):
 """
 
     with open(orig_vcf, 'rU') as orig:
-        with open(temp_vcf, "w") as out:
-            with open(scores_vcf, "w") as scored:
-                for line in orig:
-                    if line.startswith("##"):
-                        out.write(line)
-                    elif line.startswith("#C"):
-                        out.write(INFO)
-                        out.write(line)
-                    else:
-                        split_line = line.split("\t")
-                        var_key = ",".join([split_line[0], split_line[1], split_line[3], split_line[4] ])
-                        try:
-                            MPM_INFO = mapped_variants[var_key]
-                            line = line.split("\t")
-                            line[7] = line[7] + ";" + MPM_INFO
-                            line = "\t".join(line)
+        with open(annotated_vcf, "w") as out:
+            with open(scored_vcf, "w") as scored:
+                with open(unscored_vcf, "w") as unscored:
+                    for line in orig:
+                        if line.startswith("##"):
                             out.write(line)
                             scored.write(line)
-                            #del mapped_variants[var_key]
-                        except KeyError:
+                            unscored.write(line)
+                        elif line.startswith("#C"):
+                            out.write(INFO)
                             out.write(line)
+                            scored.write(INFO)
+                            scored.write(line)
+                            unscored.write(line)
+                        else:
+                            split_line = line.split("\t")
+                            var_key = ",".join([split_line[0], split_line[1], split_line[3], split_line[4] ])
+                            try:
+                                MPM_INFO = mapped_variants[var_key]
+                                line = line.split("\t")
+                                line[7] = line[7] + ";" + MPM_INFO
+                                line = "\t".join(line)
+                                out.write(line)
+                                scored.write(line)
+                                
+                            except KeyError:
+                                out.write(line)
+                                unscored.write(line)
     #print (json.dumps(mapped_variants, indent=2))
 
 
