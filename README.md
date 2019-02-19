@@ -19,7 +19,7 @@ Hence, if MutPred were to ingest a VCF containing DNA sequence variants and perf
 
 The above goal can be acheived through a scalable integrated workflow that combines genomic tools designed to annotate data stored in VCF files with tools in the MutPred Suite. In terms of performance, this workflow should be able to analyze VCF files containing an order of 100,000 variants in a few hours and be extensible with respect to VCF annotation. Because MutPred tools operate on individual amino acid sequences, and in some cases subsequences, scalablity can be achieved through standard parallelization using multiple computer nodes within a cluster. Making such a system portable for wide use is enabled by employing a standardized worflow system and containerizing tools that have complex installation requirements.  
 
-**Workflow** ![Here](data/mutpred_workflow.png "Conceptual Workflow")
+**Workflow** ![alt text](data/dag.svg "Snakemake Workflow")
 * [Link](https://docs.google.com/drawings/d/1K82kxgp6OYccRhUak_vzbA3sk6ERMYB-eNRHvFq8JGo/edit?usp=sharing) to Workflow
 
 ## Future Directions
