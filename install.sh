@@ -9,23 +9,23 @@ while true; do
         [Yy]* ) 
             # download and unzip mutpred2
             wget --directory-prefix=tools/ http://mutpred.mutdb.org/mutpred2.0_linux_x86_64.tar.gz;
-            tar -xvzf tools/mutpred2.0_linux_x86_64.tar.gz;
+            tar -xvzf tools/mutpred2.0_linux_x86_64.tar.gz --directory tools;
             rm tools/mutpred2.0_linux_x86_64.tar.gz;
             printf "[NCBI]\nDATA=$(pwd)/tools/mutpred2.0/blast-2.2.18/data/" > tools/mutpred2.0/.ncbirc;
             source tools/mutpred2.0/.ncbirc;
             echo "ignore this error, all is fine";
 
             #download and unzip mutpred LOF
-            wget --directory-prefix=tools/ http://mutpredlof.cs.indiana.edu/MutPredLOF_compiled.tar.gz;
-            tar -xvzf tools/MutPredLOF_compiled.tar.gz;
+            wget --directory-prefix=tools/ http://mutpred2.mutdb.org/mutpredlof/MutPredLOF_compiled.tar.gz;
+            tar -xvzf tools/MutPredLOF_compiled.tar.gz --directory tools;
             rm tools/MutPredLOF_compiled.tar.gz;
-            cp -r tools/mutpred2.0/v91/ tools/MutPredLOF/;
+            cp -r tools/mutpred2.0/v91/ tools/mutpredlof_bac/;
 
             #download and unzip mutpred indels
-            wget --directory-prefix=tools/ http://mutpredindel.cs.indiana.edu/MutPredIndel_compiled.tar.gz;
-            tar -xvzf tools/MutPredIndel_compiled.tar.gz;
+            wget --directory-prefix=tools/ http://mutpred2.mutdb.org/mutpredindel/MutPredIndel_compiled.tar.gz;
+            tar -xvzf tools/MutPredIndel_compiled.tar.gz --directory tools;
             rm tools/MutPredIndel_compiled.tar.gz;
-            cp -r tools/mutpred2.0/v91/ tools/MutPredIndel_compiled/;
+            cp -r tools/mutpred2.0/v91/ tools/mutpredindel/;
             break;;
         [Nn]* ) exit;;
         * ) echo "Please answer yes or no.";;

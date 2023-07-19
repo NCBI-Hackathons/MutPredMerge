@@ -4,6 +4,6 @@
 
 [MutPred2](http://mutpred.mutdb.org/#dload)
 
-[MutPredLOF](http://mutpredlof.cs.indiana.edu/#dload)
+[MutPredLOF](http://mutpred2.mutdb.org/mutpredlof/#dload)
 
-[MutPred-Indel](http://mutpredindel.cs.indiana.edu/#dload)
+[MutPred-Indel](http://mutpred2.mutdb.org/mutpredindel/#dload)
