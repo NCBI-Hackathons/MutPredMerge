@@ -19,13 +19,13 @@ while true; do
             wget --directory-prefix=tools/ http://mutpred2.mutdb.org/mutpredlof/MutPredLOF_compiled.tar.gz;
             tar -xvzf tools/MutPredLOF_compiled.tar.gz --directory tools;
             rm tools/MutPredLOF_compiled.tar.gz;
-            cp -r tools/mutpred2.0/v91/ tools/mutpredlof_bac/;
+            #cp -r tools/mutpred2.0/v91/ tools/mutpredlof_bac/;
 
             #download and unzip mutpred indels
             wget --directory-prefix=tools/ http://mutpred2.mutdb.org/mutpredindel/MutPredIndel_compiled.tar.gz;
             tar -xvzf tools/MutPredIndel_compiled.tar.gz --directory tools;
             rm tools/MutPredIndel_compiled.tar.gz;
-            cp -r tools/mutpred2.0/v91/ tools/mutpredindel/;
+            #cp -r tools/mutpred2.0/v91/ tools/mutpredindel/;
             break;;
         [Nn]* ) exit;;
         * ) echo "Please answer yes or no.";;
